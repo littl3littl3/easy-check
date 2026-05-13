@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Little Check Bill Preview</title>
+    <style>
+      :root {
+        color: #020617;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background: #eef6ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .page {
+        min-height: 100vh;
+        padding: 24px;
+      }
+
+      .input-tone {
+        background: #eef6ff;
+      }
+
+      .summary-tone {
+        background: #f6f1e8;
+        color: #1f2933;
+      }
+
+      .wrap {
+        max-width: 1152px;
+        margin: 0 auto;
+      }
+
+      .stack > * + * {
+        margin-top: 24px;
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        color: #2563eb;
+        font-size: clamp(40px, 8vw, 60px);
+        line-height: 1;
+        font-weight: 950;
+      }
+
+      .summary-tone h1 {
+        color: #b45309;
+      }
+
+      h2 {
+        font-size: 30px;
+        line-height: 1.1;
+        font-weight: 950;
+      }
+
+      .subtitle {
+        margin-top: 8px;
+        color: #64748b;
+      }
+
+      .grid-main {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .grid-bottom {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      @media (min-width: 960px) {
+        .grid-main {
+          grid-template-columns: 1fr 2fr;
+        }
+
+        .grid-bottom {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .panel {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 20px;
+        box-shadow: 0 1px 2px rgb(15 23 42 / 0.08);
+      }
+
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .app-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .eyebrow {
+        color: #b45309;
+        font-size: 14px;
+        font-weight: 850;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .list > * + * {
+        margin-top: 12px;
+      }
+
+      .person-row,
+      .summary-row,
+      .item-card,
+      .qr-box {
+        background: #f8fafc;
+        border-radius: 20px;
+      }
+
+      .summary-tone .summary-row,
+      .summary-tone .report-person,
+      .summary-tone .qr-box {
+        background: #fbf7ef;
+      }
+
+      .person-row,
+      .summary-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px;
+      }
+
+      .person-main {
+        min-width: 0;
+      }
+
+      .badge {
+        display: inline-flex;
+        max-width: 100%;
+        align-items: center;
+        border-radius: 999px;
+        padding: 6px 12px;
+        color: #ffffff;
+        font-weight: 800;
+      }
+
+      .badge span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .bg-blue { background: #3b82f6; }
+      .bg-violet { background: #8b5cf6; }
+      .bg-cyan { background: #06b6d4; }
+      .bg-emerald { background: #10b981; }
+      .bg-orange { background: #f97316; }
+      .bg-pink { background: #ec4899; }
+      .bg-red { background: #ef4444; }
+      .bg-purple { background: #a855f7; }
+      .bg-muted { background: #cbd5e1; }
+
+      .small {
+        margin-top: 8px;
+        color: #64748b;
+        font-size: 14px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      input {
+        min-width: 0;
+        width: 100%;
+        border: 1px solid #e2e8f0;
+        border-radius: 18px;
+        padding: 13px 16px;
+        outline: none;
+        background: #ffffff;
+      }
+
+      input:focus {
+        border-color: #3b82f6;
+      }
+
+      .input-soft {
+        background: #f8fafc;
+      }
+
+      .btn-primary {
+        border: 0;
+        border-radius: 18px;
+        background: #3b82f6;
+        color: #ffffff;
+        font-weight: 800;
+        padding: 12px 20px;
+      }
+
+      .btn-secondary {
+        border: 0;
+        border-radius: 18px;
+        background: #ffffff;
+        color: #b45309;
+        font-weight: 800;
+        padding: 12px 20px;
+        box-shadow: 0 1px 2px rgb(15 23 42 / 0.08);
+      }
+
+      .btn-icon {
+        width: 52px;
+        flex: 0 0 52px;
+        padding: 12px;
+        font-size: 22px;
+        line-height: 1;
+      }
+
+      .btn-danger {
+        border: 0;
+        background: transparent;
+        color: #ef4444;
+        font-weight: 750;
+        padding: 8px 0;
+      }
+
+      .item-card {
+        padding: 20px;
+      }
+
+      .item-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .emoji {
+        font-size: 32px;
+      }
+
+      .name-title {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .item-inputs {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      @media (min-width: 720px) {
+        .item-inputs {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .chip {
+        border: 0;
+        border-radius: 999px;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 750;
+        padding: 8px 16px;
+      }
+
+      .item-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 16px;
+      }
+
+      .warning {
+        color: #f97316;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .summary-row {
+        padding: 16px 20px;
+      }
+
+      .amount {
+        flex: 0 0 auto;
+        font-size: 20px;
+        font-weight: 850;
+      }
+
+      .total {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 24px;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 20px;
+        font-size: 30px;
+        font-weight: 950;
+      }
+
+      .qr-box {
+        display: flex;
+        min-height: 320px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        padding: 24px;
+      }
+
+      .qr-card {
+        text-align: center;
+      }
+
+      .qr-shell {
+        display: inline-grid;
+        grid-template-columns: repeat(25, 8px);
+        grid-template-rows: repeat(25, 8px);
+        gap: 1px;
+        border-radius: 22px;
+        background: #ffffff;
+        padding: 16px;
+        box-shadow: 0 1px 2px rgb(15 23 42 / 0.08);
+      }
+
+      .qr-cell {
+        width: 8px;
+        height: 8px;
+        background: transparent;
+      }
+
+      .qr-cell.on {
+        background: #020617;
+      }
+
+      .qr-image {
+        display: block;
+        width: 220px;
+        height: 220px;
+        border-radius: 12px;
+      }
+
+      .qr-svg {
+        display: block;
+        width: 220px;
+        height: 220px;
+      }
+
+      .qr-title {
+        margin-top: 16px;
+        font-size: 18px;
+        font-weight: 850;
+      }
+
+      .muted {
+        color: #64748b;
+        font-size: 14px;
+      }
+
+      .empty {
+        color: #94a3b8;
+        text-align: center;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .report-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .report-person {
+        border-radius: 24px;
+        background: #f8fafc;
+        padding: 20px;
+      }
+
+      .report-person-head,
+      .report-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .report-lines {
+        margin-top: 16px;
+      }
+
+      .report-lines > * + * {
+        margin-top: 8px;
+      }
+
+      .report-item {
+        border-radius: 16px;
+        background: #ffffff;
+        padding: 12px 16px;
+      }
+
+      .sticky-report {
+        align-self: start;
+      }
+
+      @media (min-width: 960px) {
+        .report-layout {
+          grid-template-columns: 1fr 340px;
+        }
+
+        .sticky-report {
+          position: sticky;
+          top: 24px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .page {
+          padding: 16px;
+        }
+
+        .panel {
+          border-radius: 20px;
+          padding: 16px;
+        }
+
+        .panel-head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .app-head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .total {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="inputPage" class="page input-tone">
+      <div class="wrap stack">
+        <header class="app-head">
+          <div>
+            <h1>Easy Check</h1>
+            <p class="subtitle">Split bills easily ✨</p>
+          </div>
+          <button id="viewSummary" class="btn-primary" type="button">View Summary</button>
+        </header>
+
+        <section class="grid-main">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>People</h2>
+            </div>
+            <div id="peopleList" class="list"></div>
+            <div class="actions">
+              <input id="newPerson" placeholder="Add friend" />
+              <button id="addPerson" class="btn-primary btn-icon" type="button" aria-label="Add person">+</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Items</h2>
+              <button id="addItem" class="btn-primary" type="button">Add Item</button>
+            </div>
+            <div id="itemsList" class="list"></div>
+          </div>
+        </section>
+
+        <section class="grid-bottom">
+          <div class="panel">
+            <h2>Summary</h2>
+            <div id="summaryList" class="list" style="margin-top: 20px"></div>
+            <div class="total">
+              <span>Total</span>
+              <span id="grandTotal">฿0</span>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h2>Bill Info</h2>
+            <div style="margin-top: 20px">
+              <label class="muted" style="font-weight: 800">What is this bill for?</label>
+              <input id="billTitle" class="input-soft" placeholder="Friday Party" style="margin-top: 8px" />
+            </div>
+            <div style="margin-top: 16px">
+              <label class="muted" style="font-weight: 800">PromptPay phone number</label>
+              <input id="promptPay" class="input-soft" placeholder="0812345678" style="margin-top: 8px" />
+            </div>
+            <button id="viewSummaryPanel" class="btn-primary" type="button" style="margin-top: 20px; width: 100%; padding: 16px 20px; font-size: 18px">View Summary</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <main id="summaryPage" class="page summary-tone hidden">
+      <div class="wrap stack">
+        <header class="app-head">
+          <div>
+            <div class="eyebrow">Easy Check</div>
+            <h1 id="reportTitle">Friday Party</h1>
+            <p class="subtitle">Everyone's share for this bill</p>
+          </div>
+          <button id="backToEdit" class="btn-secondary" type="button">Back to Edit</button>
+        </header>
+
+        <section class="report-layout">
+          <div class="stack">
+            <div class="panel">
+              <div class="panel-head" style="border-bottom: 1px solid #e2e8f0; padding-bottom: 20px">
+                <h2>Report</h2>
+                <div style="text-align: right">
+                  <div class="muted">Total</div>
+                  <div id="reportGrandTotal" style="font-size: 30px; font-weight: 950">฿0</div>
+                </div>
+              </div>
+              <div id="reportPeople" class="list"></div>
+            </div>
+
+            <div class="panel">
+              <h2>Items</h2>
+              <div id="reportItems" class="list" style="margin-top: 20px"></div>
+            </div>
+          </div>
+
+          <aside class="panel sticky-report">
+            <h2>PromptPay</h2>
+            <div id="reportQrBox" class="qr-box"></div>
+          </aside>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      const colors = [
+        "bg-blue",
+        "bg-violet",
+        "bg-cyan",
+        "bg-emerald",
+        "bg-orange",
+        "bg-pink",
+        "bg-red",
+        "bg-purple"
+      ];
+
+      let nextId = 3;
+      let page = "input";
+      let billTitle = "Friday Party";
+      let people = [
+        { id: "1", name: "Little", color: colors[0] },
+        { id: "2", name: "John", color: colors[1] }
+      ];
+      let items = [
+        { id: "item-1", name: "Pizza", price: 399, sharedBy: ["1", "2"], emoji: "🍕" }
+      ];
+      let promptPay = "0812345678";
+
+      const peopleList = document.querySelector("#peopleList");
+      const itemsList = document.querySelector("#itemsList");
+      const summaryList = document.querySelector("#summaryList");
+      const grandTotal = document.querySelector("#grandTotal");
+      const newPerson = document.querySelector("#newPerson");
+      const billTitleInput = document.querySelector("#billTitle");
+      const promptPayInput = document.querySelector("#promptPay");
+      const inputPage = document.querySelector("#inputPage");
+      const summaryPage = document.querySelector("#summaryPage");
+      const reportTitle = document.querySelector("#reportTitle");
+      const reportGrandTotal = document.querySelector("#reportGrandTotal");
+      const reportPeople = document.querySelector("#reportPeople");
+      const reportItems = document.querySelector("#reportItems");
+      const reportQrBox = document.querySelector("#reportQrBox");
+      const emojiRules = [
+        { emoji: "🍕", keywords: ["pizza", "piza", "พิซซ่า"] },
+        { emoji: "🍔", keywords: ["burger", "hamburger", "เบอร์เกอร์", "แฮมเบอร์เกอร์"] },
+        { emoji: "🍟", keywords: ["fries", "french fries", "มันฝรั่งทอด"] },
+        { emoji: "🍗", keywords: ["chicken", "ไก่", "ไก่ทอด"] },
+        { emoji: "🥩", keywords: ["steak", "beef", "เนื้อ", "สเต๊ก"] },
+        { emoji: "🍣", keywords: ["sushi", "ซูชิ", "ซาชิมิ", "sashimi"] },
+        { emoji: "🍜", keywords: ["noodle", "ramen", "ก๋วยเตี๋ยว", "ราเมง", "บะหมี่", "ผัดไทย"] },
+        { emoji: "🍚", keywords: ["rice", "ข้าว", "ข้าวผัด", "กะเพรา", "กระเพรา"] },
+        { emoji: "🍲", keywords: ["hotpot", "shabu", "ชาบู", "สุกี้"] },
+        { emoji: "🥘", keywords: ["หมูกระทะ", "bbq", "barbecue", "grill", "ย่าง"] },
+        { emoji: "🥗", keywords: ["salad", "สลัด", "ผัก"] },
+        { emoji: "☕", keywords: ["coffee", "latte", "espresso", "americano", "กาแฟ"] },
+        { emoji: "🧋", keywords: ["milk tea", "bubble tea", "boba", "ชา", "ชานม", "ชาไข่มุก"] },
+        { emoji: "🥤", keywords: ["soda", "soft drink", "coke", "cola", "pepsi", "sprite", "โค้ก", "น้ำอัดลม"] },
+        { emoji: "💧", keywords: ["water", "น้ำเปล่า", "น้ำดื่ม"] },
+        { emoji: "🍺", keywords: ["beer", "เบียร์"] },
+        { emoji: "🍰", keywords: ["cake", "เค้ก"] },
+        { emoji: "🍨", keywords: ["ice cream", "ไอติม", "ไอศกรีม"] },
+        { emoji: "🍿", keywords: ["popcorn", "ป๊อปคอร์น"] },
+        { emoji: "🍎", keywords: ["fruit", "apple", "ผลไม้", "แอปเปิล"] }
+      ];
+
+      function getEmoji(name) {
+        const text = String(name || "").trim().toLowerCase();
+        let bestMatch = { emoji: "🍽️", score: 0 };
+
+        emojiRules.forEach((rule) => {
+          rule.keywords.forEach((keyword) => {
+            if (!text.includes(keyword)) return;
+            if (keyword.length > bestMatch.score) {
+              bestMatch = { emoji: rule.emoji, score: keyword.length };
+            }
+          });
+        });
+
+        return bestMatch.emoji;
+      }
+
+      function cleanPhone(phone) {
+        return String(phone || "").replace(/\D/g, "");
+      }
+
+      function formatBaht(value) {
+        return `฿${new Intl.NumberFormat("th-TH", { maximumFractionDigits: 0 }).format(Math.round(value))}`;
+      }
+
+      function totals() {
+        const result = Object.fromEntries(people.map((person) => [person.id, 0]));
+        items.forEach((item) => {
+          const validSharedBy = item.sharedBy.filter((id) => people.some((person) => person.id === id));
+          if (!validSharedBy.length) return;
+          const split = item.price / validSharedBy.length;
+          validSharedBy.forEach((id) => {
+            result[id] = (result[id] || 0) + split;
+          });
+        });
+        return result;
+      }
+
+      function itemsByPerson() {
+        const result = Object.fromEntries(people.map((person) => [person.id, []]));
+        items.forEach((item) => {
+          const validSharedBy = item.sharedBy.filter((id) => people.some((person) => person.id === id));
+          if (!validSharedBy.length) return;
+          const split = item.price / validSharedBy.length;
+          validSharedBy.forEach((id) => {
+            result[id].push({
+              itemId: item.id,
+              name: item.name || "New Item",
+              emoji: item.emoji,
+              amount: split
+            });
+          });
+        });
+        return result;
+      }
+
+      function totalBill() {
+        return items.reduce((sum, item) => sum + item.price, 0);
+      }
+
+      function formatPromptPayPhone(phone) {
+        const cleaned = cleanPhone(phone);
+        if (cleaned.length !== 10 || !cleaned.startsWith("0")) return "";
+        return `0066${cleaned.slice(1)}`;
+      }
+
+      function emvField(id, value) {
+        return `${id}${String(value.length).padStart(2, "0")}${value}`;
+      }
+
+      function crc16CcittFalse(input) {
+        let crc = 0xffff;
+        for (let index = 0; index < input.length; index += 1) {
+          crc ^= input.charCodeAt(index) << 8;
+          for (let bit = 0; bit < 8; bit += 1) {
+            crc = crc & 0x8000 ? (crc << 1) ^ 0x1021 : crc << 1;
+            crc &= 0xffff;
+          }
+        }
+        return crc.toString(16).toUpperCase().padStart(4, "0");
+      }
+
+      function createPromptPayPayload(phone) {
+        const promptPayPhone = formatPromptPayPhone(phone);
+        if (!promptPayPhone) return "";
+
+        const merchantInfo = [
+          emvField("00", "A000000677010111"),
+          emvField("01", promptPayPhone)
+        ].join("");
+
+        const fields = [
+          emvField("00", "01"),
+          emvField("01", "11"),
+          emvField("29", merchantInfo),
+          emvField("52", "0000"),
+          emvField("53", "764"),
+          emvField("58", "TH")
+        ].join("");
+
+        const payloadWithoutCrc = `${fields}6304`;
+        return `${payloadWithoutCrc}${crc16CcittFalse(payloadWithoutCrc)}`;
+      }
+
+      function createQrSvg(text) {
+        const version = 5;
+        const size = 17 + version * 4;
+        const dataCodewords = 108;
+        const ecCodewords = 26;
+        const modules = Array.from({ length: size }, () => Array(size).fill(null));
+        const reserved = Array.from({ length: size }, () => Array(size).fill(false));
+
+        function setModule(x, y, dark, reserve = true) {
+          if (x < 0 || y < 0 || x >= size || y >= size) return;
+          modules[y][x] = Boolean(dark);
+          if (reserve) reserved[y][x] = true;
+        }
+
+        function addFinder(x, y) {
+          for (let dy = -1; dy <= 7; dy += 1) {
+            for (let dx = -1; dx <= 7; dx += 1) {
+              const xx = x + dx;
+              const yy = y + dy;
+              if (xx < 0 || yy < 0 || xx >= size || yy >= size) continue;
+              const dark =
+                dx >= 0 &&
+                dx <= 6 &&
+                dy >= 0 &&
+                dy <= 6 &&
+                (dx === 0 ||
+                  dx === 6 ||
+                  dy === 0 ||
+                  dy === 6 ||
+                  (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4));
+              setModule(xx, yy, dark);
+            }
+          }
+        }
+
+        function addAlignment(cx, cy) {
+          for (let dy = -2; dy <= 2; dy += 1) {
+            for (let dx = -2; dx <= 2; dx += 1) {
+              setModule(cx + dx, cy + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+            }
+          }
+        }
+
+        addFinder(0, 0);
+        addFinder(size - 7, 0);
+        addFinder(0, size - 7);
+        addAlignment(30, 30);
+
+        for (let i = 8; i < size - 8; i += 1) {
+          const dark = i % 2 === 0;
+          setModule(i, 6, dark);
+          setModule(6, i, dark);
+        }
+
+        setModule(8, 4 * version + 9, true);
+
+        for (let i = 0; i < 8; i += 1) {
+          setModule(8, i, false);
+          setModule(i, 8, false);
+          setModule(size - 1 - i, 8, false);
+          setModule(8, size - 1 - i, false);
+        }
+        setModule(8, 8, false);
+
+        const bytes = Array.from(text, (char) => char.charCodeAt(0));
+        const bits = [];
+        function appendBits(target, value, length) {
+          for (let i = length - 1; i >= 0; i -= 1) {
+            target.push((value >>> i) & 1);
+          }
+        }
+
+        appendBits(bits, 0b0100, 4);
+        appendBits(bits, bytes.length, 8);
+        bytes.forEach((byte) => appendBits(bits, byte, 8));
+
+        const capacityBits = dataCodewords * 8;
+        appendBits(bits, 0, Math.max(0, Math.min(4, capacityBits - bits.length)));
+        while (bits.length % 8 !== 0) bits.push(0);
+
+        const data = [];
+        for (let i = 0; i < bits.length; i += 8) {
+          data.push(parseInt(bits.slice(i, i + 8).join(""), 2));
+        }
+        for (let pad = 0xec; data.length < dataCodewords; pad ^= 0xfd) {
+          data.push(pad);
+        }
+
+        const gfExp = Array(512).fill(0);
+        const gfLog = Array(256).fill(0);
+        let value = 1;
+        for (let i = 0; i < 255; i += 1) {
+          gfExp[i] = value;
+          gfLog[value] = i;
+          value <<= 1;
+          if (value & 0x100) value ^= 0x11d;
+        }
+        for (let i = 255; i < 512; i += 1) gfExp[i] = gfExp[i - 255];
+
+        function gfMul(a, b) {
+          return a === 0 || b === 0 ? 0 : gfExp[gfLog[a] + gfLog[b]];
+        }
+
+        let generator = [1];
+        for (let i = 0; i < ecCodewords; i += 1) {
+          const next = Array(generator.length + 1).fill(0);
+          generator.forEach((coefficient, index) => {
+            next[index] ^= coefficient;
+            next[index + 1] ^= gfMul(coefficient, gfExp[i]);
+          });
+          generator = next;
+        }
+
+        const message = data.concat(Array(ecCodewords).fill(0));
+        for (let i = 0; i < data.length; i += 1) {
+          const coefficient = message[i];
+          if (coefficient === 0) continue;
+          generator.forEach((genCoefficient, index) => {
+            message[i + index] ^= gfMul(genCoefficient, coefficient);
+          });
+        }
+
+        const codewordBits = [];
+        data.concat(message.slice(data.length)).forEach((codeword) => {
+          appendBits(codewordBits, codeword, 8);
+        });
+
+        let bitIndex = 0;
+        let upward = true;
+        for (let right = size - 1; right >= 1; right -= 2) {
+          if (right === 6) right -= 1;
+          for (let vertical = 0; vertical < size; vertical += 1) {
+            const y = upward ? size - 1 - vertical : vertical;
+            for (let dx = 0; dx < 2; dx += 1) {
+              const x = right - dx;
+              if (reserved[y][x]) continue;
+              const rawBit = bitIndex < codewordBits.length && codewordBits[bitIndex] === 1;
+              setModule(x, y, rawBit !== ((x + y) % 2 === 0), false);
+              bitIndex += 1;
+            }
+          }
+          upward = !upward;
+        }
+
+        function getFormatBits() {
+          const dataValue = (1 << 3) | 0;
+          let bitsValue = dataValue << 10;
+          for (let i = 14; i >= 10; i -= 1) {
+            if (((bitsValue >>> i) & 1) !== 0) {
+              bitsValue ^= 0x537 << (i - 10);
+            }
+          }
+          return ((dataValue << 10) | bitsValue) ^ 0x5412;
+        }
+
+        const format = getFormatBits();
+        const formatBit = (i) => ((format >>> i) & 1) !== 0;
+        for (let i = 0; i <= 5; i += 1) setModule(8, i, formatBit(i));
+        setModule(8, 7, formatBit(6));
+        setModule(8, 8, formatBit(7));
+        setModule(7, 8, formatBit(8));
+        for (let i = 9; i < 15; i += 1) setModule(14 - i, 8, formatBit(i));
+        for (let i = 0; i < 8; i += 1) setModule(size - 1 - i, 8, formatBit(i));
+        for (let i = 8; i < 15; i += 1) setModule(8, size - 15 + i, formatBit(i));
+        setModule(8, size - 8, true);
+
+        const quiet = 4;
+        const rects = [];
+        for (let y = 0; y < size; y += 1) {
+          for (let x = 0; x < size; x += 1) {
+            if (modules[y][x]) rects.push(`<rect x="${x}" y="${y}" width="1" height="1"/>`);
+          }
+        }
+
+        return `<svg class="qr-svg" viewBox="${-quiet} ${-quiet} ${size + quiet * 2} ${size + quiet * 2}" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PromptPay QR"><rect x="${-quiet}" y="${-quiet}" width="${size + quiet * 2}" height="${size + quiet * 2}" fill="#fff"/><g fill="#020617">${rects.join("")}</g></svg>`;
+      }
+
+      function renderSummaryAndQr() {
+        const perPerson = totals();
+        const billTotal = totalBill();
+
+        summaryList.innerHTML = "";
+        people.forEach((person) => {
+          const row = document.createElement("div");
+          row.className = "summary-row";
+          row.innerHTML = `
+            <div class="badge ${person.color}"><span>${person.name}</span></div>
+            <div class="amount">${formatBaht(perPerson[person.id] || 0)}</div>
+          `;
+          summaryList.append(row);
+        });
+
+        grandTotal.textContent = formatBaht(billTotal);
+        billTitleInput.value = billTitle;
+        promptPayInput.value = promptPay;
+      }
+
+      function renderReport() {
+        const perPerson = totals();
+        const billTotal = totalBill();
+        const breakdown = itemsByPerson();
+
+        reportTitle.textContent = billTitle.trim() || "Untitled Bill";
+        reportGrandTotal.textContent = formatBaht(billTotal);
+
+        reportPeople.innerHTML = "";
+        people.forEach((person) => {
+          const card = document.createElement("div");
+          card.className = "report-person";
+          const lines = breakdown[person.id] || [];
+          card.innerHTML = `
+            <div class="report-person-head">
+              <div class="badge ${person.color}"><span>${person.name}</span></div>
+              <div class="amount">${formatBaht(perPerson[person.id] || 0)}</div>
+            </div>
+            <div class="report-lines">
+              ${
+                lines.length
+                  ? lines
+                      .map(
+                        (entry) => `
+                          <div class="report-item">
+                            <div style="min-width: 0">
+                              <span style="margin-right: 8px">${entry.emoji}</span>
+                              <span style="font-weight: 750">${entry.name}</span>
+                            </div>
+                            <div style="font-weight: 850">${formatBaht(entry.amount)}</div>
+                          </div>
+                        `
+                      )
+                      .join("")
+                  : `<div class="report-item muted">No items selected</div>`
+              }
+            </div>
+          `;
+          reportPeople.append(card);
+        });
+
+        reportItems.innerHTML = "";
+        items.forEach((item) => {
+          const row = document.createElement("div");
+          row.className = "summary-row";
+          row.innerHTML = `
+            <div style="min-width: 0">
+              <div style="font-weight: 850; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
+                <span style="margin-right: 8px">${item.emoji}</span>${item.name || "New Item"}
+              </div>
+              <div class="muted" style="margin-top: 4px">${item.sharedBy.length} people</div>
+            </div>
+            <div class="amount">${formatBaht(item.price)}</div>
+          `;
+          reportItems.append(row);
+        });
+
+        const payload = createPromptPayPayload(promptPay);
+        reportQrBox.innerHTML = "";
+        if (payload) {
+          const card = document.createElement("div");
+          card.className = "qr-card";
+          card.innerHTML = `
+            <div class="qr-shell">
+              ${createQrSvg(payload)}
+            </div>
+            <div class="qr-title">พร้อมรับเงิน</div>
+            <div class="muted">${promptPay}</div>
+          `;
+          reportQrBox.append(card);
+        } else {
+          reportQrBox.innerHTML = `<div class="empty">Enter a valid Thai phone number</div>`;
+        }
+      }
+
+      function renderPage() {
+        inputPage.classList.toggle("hidden", page !== "input");
+        summaryPage.classList.toggle("hidden", page !== "summary");
+        if (page === "summary") renderReport();
+      }
+
+      function render() {
+        const perPerson = totals();
+
+        peopleList.innerHTML = "";
+        people.forEach((person) => {
+          const row = document.createElement("div");
+          row.className = "person-row";
+          row.innerHTML = `
+            <div class="person-main">
+              <div class="badge ${person.color}"><span>${person.name}</span></div>
+              <div class="small">${formatBaht(perPerson[person.id] || 0)}</div>
+            </div>
+            <button class="btn-danger" type="button">Remove</button>
+          `;
+          row.querySelector("button").addEventListener("click", () => {
+            people = people.filter((current) => current.id !== person.id);
+            items = items.map((item) => ({
+              ...item,
+              sharedBy: item.sharedBy.filter((id) => id !== person.id)
+            }));
+            render();
+          });
+          peopleList.append(row);
+        });
+
+        itemsList.innerHTML = "";
+        items.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "item-card";
+          card.innerHTML = `
+            <div class="item-title">
+              <div class="emoji">${item.emoji}</div>
+              <div class="name-title">${item.name || "New Item"}</div>
+            </div>
+            <div class="item-inputs">
+              <input class="item-name" value="${item.name}" placeholder="Item name" />
+              <input class="item-price" type="number" min="0" value="${item.price}" placeholder="Price" />
+            </div>
+            <div class="chips"></div>
+            <div class="item-footer">
+              <span class="${item.sharedBy.length ? "muted" : "warning"}">
+                ${item.sharedBy.length ? `Split between ${item.sharedBy.length}` : "Select at least one person"}
+              </span>
+              <button class="btn-danger" type="button">Remove</button>
+            </div>
+          `;
+
+          card.querySelector(".item-name").addEventListener("input", (event) => {
+            item.name = event.target.value;
+            item.emoji = getEmoji(item.name);
+            card.querySelector(".emoji").textContent = item.emoji;
+            card.querySelector(".name-title").textContent = item.name || "New Item";
+          });
+
+          card.querySelector(".item-price").addEventListener("input", (event) => {
+            item.price = Math.max(0, Number(event.target.value) || 0);
+            renderSummaryAndQr();
+          });
+
+          const chips = card.querySelector(".chips");
+          people.forEach((person) => {
+            const active = item.sharedBy.includes(person.id);
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.className = `chip ${active ? person.color : "bg-muted"}`;
+            chip.textContent = person.name;
+            chip.addEventListener("click", () => {
+              item.sharedBy = active
+                ? item.sharedBy.filter((id) => id !== person.id)
+                : [...item.sharedBy, person.id];
+              render();
+            });
+            chips.append(chip);
+          });
+
+          card.querySelector(".btn-danger").addEventListener("click", () => {
+            items = items.filter((current) => current.id !== item.id);
+            render();
+          });
+
+          itemsList.append(card);
+        });
+
+        renderSummaryAndQr();
+        renderPage();
+      }
+
+      document.querySelector("#addPerson").addEventListener("click", () => {
+        const name = newPerson.value.trim();
+        if (!name) return;
+        people = [...people, { id: String(nextId++), name, color: colors[people.length % colors.length] }];
+        newPerson.value = "";
+        render();
+      });
+
+      newPerson.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") document.querySelector("#addPerson").click();
+      });
+
+      document.querySelector("#addItem").addEventListener("click", () => {
+        items = [
+          ...items,
+          {
+            id: `item-${nextId++}`,
+            name: "",
+            price: 0,
+            sharedBy: people.map((person) => person.id),
+            emoji: "🍽️"
+          }
+        ];
+        render();
+      });
+
+      billTitleInput.addEventListener("input", (event) => {
+        billTitle = event.target.value;
+      });
+
+      promptPayInput.addEventListener("input", (event) => {
+        promptPay = event.target.value;
+        renderSummaryAndQr();
+      });
+
+      document.querySelector("#viewSummary").addEventListener("click", () => {
+        page = "summary";
+        renderPage();
+      });
+
+      document.querySelector("#viewSummaryPanel").addEventListener("click", () => {
+        page = "summary";
+        renderPage();
+      });
+
+      document.querySelector("#backToEdit").addEventListener("click", () => {
+        page = "input";
+        renderPage();
+      });
+
+      render();
+    </script>
+  </body>
+</html>
