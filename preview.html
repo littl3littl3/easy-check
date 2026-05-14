@@ -32,7 +32,7 @@
 
       .page {
         min-height: 100vh;
-        padding: 24px;
+        padding: 16px;
       }
 
       .input-tone {
@@ -50,7 +50,7 @@
       }
 
       .stack > * + * {
-        margin-top: 24px;
+        margin-top: 16px;
       }
 
       h1,
@@ -68,6 +68,18 @@
 
       .summary-tone h1 {
         color: #b45309;
+      }
+
+      .summary-tone .wrap {
+        max-width: 1080px;
+      }
+
+      .summary-tone .stack > * + * {
+        margin-top: 12px;
+      }
+
+      .summary-tone h1 {
+        font-size: clamp(32px, 5vw, 44px);
       }
 
       h2 {
@@ -387,13 +399,13 @@
 
       .qr-svg {
         display: block;
-        width: 220px;
-        height: 220px;
+        width: 168px;
+        height: 168px;
       }
 
       .qr-title {
-        margin-top: 16px;
-        font-size: 18px;
+        margin-top: 12px;
+        font-size: 16px;
         font-weight: 850;
       }
 
@@ -414,13 +426,13 @@
       .report-layout {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 12px;
       }
 
       .report-person {
-        border-radius: 24px;
+        border-radius: 14px;
         background: #f8fafc;
-        padding: 20px;
+        padding: 10px 12px;
       }
 
       .report-person-head,
@@ -432,17 +444,50 @@
       }
 
       .report-lines {
-        margin-top: 16px;
-      }
-
-      .report-lines > * + * {
         margin-top: 8px;
       }
 
+      .report-lines > * + * {
+        margin-top: 6px;
+      }
+
       .report-item {
-        border-radius: 16px;
+        border-radius: 12px;
         background: #ffffff;
-        padding: 12px 16px;
+        padding: 8px 12px;
+      }
+
+      .receipt-row {
+        display: grid;
+        gap: 8px;
+        border-radius: 14px;
+        background: #fbf7ef;
+        padding: 9px 12px;
+      }
+
+      .receipt-item-row {
+        display: grid;
+        gap: 8px;
+        border-radius: 14px;
+        background: #ffffff;
+        padding: 9px 12px;
+        font-size: 14px;
+      }
+
+      .receipt-muted {
+        min-width: 0;
+        overflow: hidden;
+        color: #64748b;
+        font-size: 14px;
+        font-weight: 650;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .receipt-total {
+        text-align: right;
+        font-size: 18px;
+        font-weight: 950;
       }
 
       .sticky-report {
@@ -451,7 +496,17 @@
 
       @media (min-width: 960px) {
         .report-layout {
-          grid-template-columns: 1fr 340px;
+          grid-template-columns: 1fr 260px;
+        }
+
+        .receipt-row {
+          grid-template-columns: 140px 1fr 96px;
+          align-items: center;
+        }
+
+        .receipt-item-row {
+          grid-template-columns: 1fr 1fr 88px;
+          align-items: center;
         }
 
         .sticky-report {
@@ -550,33 +605,33 @@
           <div>
             <div class="eyebrow">Easy Check</div>
             <h1 id="reportTitle">Friday Party</h1>
-            <p class="subtitle">Everyone's share for this bill</p>
           </div>
           <button id="backToEdit" class="btn-secondary" type="button">Back to Edit</button>
         </header>
 
         <section class="report-layout">
-          <div class="stack">
-            <div class="panel">
-              <div class="panel-head" style="border-bottom: 1px solid #e2e8f0; padding-bottom: 20px">
-                <h2>Report</h2>
+          <div class="panel" style="border-radius: 20px; padding: 16px">
+              <div class="panel-head" style="border-bottom: 1px solid #eadfce; margin-bottom: 12px; padding-bottom: 12px">
+                <h2 style="font-size: 22px">Receipt</h2>
                 <div style="text-align: right">
-                  <div class="muted">Total</div>
-                  <div id="reportGrandTotal" style="font-size: 30px; font-weight: 950">฿0</div>
+                  <div class="muted" style="font-size: 12px; font-weight: 850; text-transform: uppercase">Total</div>
+                  <div id="reportGrandTotal" style="color: #b45309; font-size: 28px; font-weight: 950">฿0</div>
                 </div>
               </div>
               <div id="reportPeople" class="list"></div>
-            </div>
 
-            <div class="panel">
-              <h2>Items</h2>
-              <div id="reportItems" class="list" style="margin-top: 20px"></div>
-            </div>
+              <div style="border-top: 1px solid #eadfce; margin-top: 12px; padding-top: 12px">
+                <h3 style="color: #64748b; font-size: 14px; font-weight: 950; letter-spacing: 0.04em; margin: 0 0 8px; text-transform: uppercase">Items</h3>
+                <div id="reportItems" class="list"></div>
+              </div>
           </div>
 
-          <aside class="panel sticky-report">
-            <h2>PromptPay</h2>
-            <div id="reportQrBox" class="qr-box"></div>
+          <aside class="panel sticky-report" style="border-radius: 20px; padding: 16px">
+            <div class="panel-head" style="margin-bottom: 12px">
+              <h2 style="font-size: 22px">PromptPay</h2>
+              <span class="muted" style="font-size: 12px; font-weight: 850">Scan</span>
+            </div>
+            <div id="reportQrBox" class="qr-box" style="min-height: 232px; padding: 16px"></div>
           </aside>
         </section>
       </div>
@@ -953,49 +1008,37 @@
 
         reportPeople.innerHTML = "";
         people.forEach((person) => {
-          const card = document.createElement("div");
-          card.className = "report-person";
           const lines = breakdown[person.id] || [];
-          card.innerHTML = `
-            <div class="report-person-head">
-              <div class="badge ${person.color}"><span>${person.name}</span></div>
-              <div class="amount">${formatBaht(perPerson[person.id] || 0)}</div>
-            </div>
-            <div class="report-lines">
+          const row = document.createElement("div");
+          row.className = "receipt-row";
+          row.innerHTML = `
+            <div class="badge ${person.color}" style="padding: 5px 10px; font-size: 14px"><span>${person.name}</span></div>
+            <div class="receipt-muted">
               ${
                 lines.length
-                  ? lines
-                      .map(
-                        (entry) => `
-                          <div class="report-item">
-                            <div style="min-width: 0">
-                              <span style="margin-right: 8px">${entry.emoji}</span>
-                              <span style="font-weight: 750">${entry.name}</span>
-                            </div>
-                            <div style="font-weight: 850">${formatBaht(entry.amount)}</div>
-                          </div>
-                        `
-                      )
-                      .join("")
-                  : `<div class="report-item muted">No items selected</div>`
+                  ? lines.map((entry) => `${entry.emoji} ${entry.name}`).join(", ")
+                  : "No items selected"
               }
             </div>
+            <div class="receipt-total">${formatBaht(perPerson[person.id] || 0)}</div>
           `;
-          reportPeople.append(card);
+          reportPeople.append(row);
         });
 
         reportItems.innerHTML = "";
         items.forEach((item) => {
+          const sharedNames = item.sharedBy
+            .map((id) => people.find((person) => person.id === id)?.name)
+            .filter(Boolean)
+            .join(", ");
           const row = document.createElement("div");
-          row.className = "summary-row";
+          row.className = "receipt-item-row";
           row.innerHTML = `
-            <div style="min-width: 0">
-              <div style="font-weight: 850; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
-                <span style="margin-right: 8px">${item.emoji}</span>${item.name || "New Item"}
-              </div>
-              <div class="muted" style="margin-top: 4px">${item.sharedBy.length} people</div>
+            <div style="font-weight: 850; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
+              <span style="margin-right: 6px">${item.emoji}</span>${item.name || "New Item"}
             </div>
-            <div class="amount">${formatBaht(item.price)}</div>
+            <div class="receipt-muted">${sharedNames || "No one selected"}</div>
+            <div class="receipt-total" style="font-size: 16px">${formatBaht(item.price)}</div>
           `;
           reportItems.append(row);
         });

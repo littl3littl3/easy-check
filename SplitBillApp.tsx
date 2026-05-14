@@ -404,132 +404,120 @@ export default function SplitBillApp() {
 
   if (page === 'summary') {
     return (
-      <main className="min-h-screen bg-[#f6f1e8] p-4 text-[#1f2933] sm:p-6">
-        <div className="mx-auto max-w-5xl space-y-6">
-          <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <main className="min-h-screen bg-[#f6f1e8] p-3 text-[#1f2933] sm:p-4">
+        <div className="mx-auto max-w-5xl space-y-3">
+          <header className="flex items-start justify-between gap-3">
             <div>
-              <div className="text-sm font-bold uppercase tracking-wide text-blue-500">
+              <div className="text-xs font-bold uppercase tracking-wide text-[#b45309]">
                 Easy Check
               </div>
-              <h1 className="mt-1 text-4xl font-black text-slate-950 sm:text-5xl">
+              <h1 className="mt-0.5 text-3xl font-black leading-none text-[#b45309] sm:text-4xl">
                 {billTitle.trim() || 'Untitled Bill'}
               </h1>
-              <p className="mt-2 text-slate-500">
-                Everyone's share for this bill
-              </p>
             </div>
 
             <button
               type="button"
               onClick={() => setPage('input')}
-              className="rounded-2xl bg-white px-5 py-3 font-bold text-[#b45309] shadow-sm"
+              className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-[#b45309] shadow-sm"
             >
               Back to Edit
             </button>
           </header>
 
-          <section className="grid gap-6 lg:grid-cols-[1fr_340px]">
-            <div className="space-y-6">
-              <div className="rounded-3xl bg-white p-5 shadow-sm">
-                <div className="flex items-center justify-between gap-4 border-b pb-5">
-                  <h2 className="text-3xl font-black">Report</h2>
-                  <div className="text-right">
-                    <div className="text-sm text-slate-500">Total</div>
-                    <div className="text-3xl font-black text-[#b45309]">
-                      {formatBaht(grandTotal)}
-                    </div>
+          <section className="grid gap-3 lg:grid-cols-[1fr_260px]">
+            <div className="rounded-2xl bg-white p-4 shadow-sm">
+              <div className="mb-3 flex items-center justify-between border-b border-[#eadfce] pb-3">
+                <h2 className="text-xl font-black">Receipt</h2>
+                <div className="text-right">
+                  <div className="text-xs font-bold uppercase text-slate-400">
+                    Total
                   </div>
-                </div>
-
-                <div className="mt-5 space-y-4">
-                  {people.map((person) => (
-                    <div
-                      key={person.id}
-                      className="rounded-3xl bg-[#fbf7ef] p-5"
-                    >
-                      <div className="flex items-center justify-between gap-4">
-                        <div
-                          className={`${person.color} min-w-0 rounded-full px-3 py-1 font-bold text-white`}
-                        >
-                          <span className="block truncate">{person.name}</span>
-                        </div>
-
-                        <div className="shrink-0 text-2xl font-black">
-                          {formatBaht(totalPerPerson[person.id] || 0)}
-                        </div>
-                      </div>
-
-                      <div className="mt-4 space-y-2">
-                        {(itemsByPerson[person.id] || []).length > 0 ? (
-                          itemsByPerson[person.id].map((entry) => (
-                            <div
-                              key={`${person.id}-${entry.itemId}`}
-                              className="flex items-center justify-between gap-3 rounded-2xl bg-white px-4 py-3"
-                            >
-                              <div className="min-w-0">
-                                <span className="mr-2" aria-hidden="true">
-                                  {entry.emoji}
-                                </span>
-                                <span className="font-semibold">
-                                  {entry.name}
-                                </span>
-                              </div>
-
-                              <span className="shrink-0 font-bold">
-                                {formatBaht(entry.amount)}
-                              </span>
-                            </div>
-                          ))
-                        ) : (
-                          <div className="rounded-2xl bg-white px-4 py-3 text-sm text-slate-400">
-                            No items selected
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                  <div className="text-2xl font-black text-[#b45309]">
+                    {formatBaht(grandTotal)}
+                  </div>
                 </div>
               </div>
 
-              <div className="rounded-3xl bg-white p-5 shadow-sm">
-                <h2 className="mb-4 text-3xl font-black">Items</h2>
-                <div className="space-y-3">
-                  {items.map((item) => (
+              <div className="space-y-1.5">
+                {people.map((person) => {
+                  const breakdown = itemsByPerson[person.id] || [];
+
+                  return (
                     <div
-                      key={item.id}
-                    className="flex items-center justify-between gap-4 rounded-2xl bg-[#fbf7ef] px-5 py-4"
+                      key={person.id}
+                      className="grid gap-2 rounded-xl bg-[#fbf7ef] px-3 py-2 sm:grid-cols-[140px_1fr_96px] sm:items-center"
                     >
-                      <div className="min-w-0">
-                        <div className="truncate font-bold">
-                          <span className="mr-2" aria-hidden="true">
+                      <div
+                        className={`${person.color} inline-flex max-w-full rounded-full px-2.5 py-1 text-sm font-bold text-white`}
+                      >
+                        <span className="truncate">{person.name}</span>
+                      </div>
+
+                      <div className="min-w-0 text-sm font-semibold text-slate-600">
+                        {breakdown.length > 0
+                          ? breakdown
+                              .map((entry) => `${entry.emoji} ${entry.name}`)
+                              .join(', ')
+                          : 'No items selected'}
+                      </div>
+
+                      <div className="text-right text-lg font-black">
+                        {formatBaht(totalPerPerson[person.id] || 0)}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="mt-3 border-t border-[#eadfce] pt-3">
+                <h3 className="mb-2 text-sm font-black uppercase tracking-wide text-slate-500">
+                  Items
+                </h3>
+                <div className="space-y-1.5">
+                  {items.map((item) => {
+                    const sharedNames = item.sharedBy
+                      .map((id) => people.find((person) => person.id === id)?.name)
+                      .filter(Boolean)
+                      .join(', ');
+
+                    return (
+                      <div
+                        key={item.id}
+                        className="grid gap-2 rounded-xl bg-white px-3 py-2 text-sm sm:grid-cols-[1fr_1fr_88px] sm:items-center"
+                      >
+                        <div className="min-w-0 truncate font-bold">
+                          <span className="mr-1.5" aria-hidden="true">
                             {item.emoji}
                           </span>
                           {item.name || 'New Item'}
                         </div>
-                        <div className="mt-1 text-sm text-slate-500">
-                          {item.sharedBy.length} people
+                        <div className="min-w-0 truncate text-slate-500">
+                          {sharedNames || 'No one selected'}
+                        </div>
+                        <div className="text-right font-black">
+                          {formatBaht(item.price)}
                         </div>
                       </div>
-
-                      <div className="shrink-0 text-xl font-black">
-                        {formatBaht(item.price)}
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
 
-            <aside className="rounded-3xl bg-white p-5 shadow-sm lg:sticky lg:top-6 lg:self-start">
-              <h2 className="mb-5 text-3xl font-black">PromptPay</h2>
-              <div className="flex min-h-[320px] items-center justify-center rounded-3xl bg-[#fbf7ef] p-6">
+            <aside className="rounded-2xl bg-white p-4 shadow-sm">
+              <div className="mb-3 flex items-center justify-between">
+                <h2 className="text-xl font-black">PromptPay</h2>
+                <span className="text-xs font-bold text-slate-400">Scan</span>
+              </div>
+              <div className="flex min-h-[232px] items-center justify-center rounded-2xl bg-[#fbf7ef] p-4">
                 {qrValue ? (
                   <div className="text-center">
-                    <div className="rounded-3xl bg-white p-4 shadow-sm">
-                      <QRCode value={qrValue} size={220} />
+                    <div className="rounded-2xl bg-white p-3 shadow-sm">
+                      <QRCode value={qrValue} size={168} />
                     </div>
 
-                    <div className="mt-4 text-lg font-bold">พร้อมรับเงิน</div>
+                    <div className="mt-3 text-base font-bold">พร้อมรับเงิน</div>
                     <div className="text-sm text-slate-500">{promptPay}</div>
                   </div>
                 ) : (
