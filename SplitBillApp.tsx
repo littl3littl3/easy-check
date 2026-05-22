@@ -512,8 +512,8 @@ export default function SplitBillApp() {
               </div>
               <div className="flex min-h-[232px] items-center justify-center rounded-2xl bg-[#fbf7ef] p-4">
                 {qrValue ? (
-                  <div className="text-center">
-                    <div className="rounded-2xl bg-white p-3 shadow-sm">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="flex items-center justify-center rounded-2xl bg-white p-3 shadow-sm">
                       <QRCode value={qrValue} size={168} />
                     </div>
 
