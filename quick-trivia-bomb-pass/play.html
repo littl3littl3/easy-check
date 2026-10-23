@@ -59,7 +59,7 @@ function ping(){if(conn?.open){const id=String(Date.now())+'-'+Math.random();con
 function onPong(m){if(!Number.isFinite(m.hostTime)||!Number.isFinite(m.clientSent))return;const now=Date.now(),rtt=Math.max(0,now-m.clientSent);if(rtt>2500)return;const offset=m.hostTime-(m.clientSent+now)/2;if(clockOffset===null||rtt<pingMs){clockOffset=offset;pingMs=rtt}else{clockOffset=clockOffset*.8+offset*.2;pingMs=pingMs*.8+rtt*.2}}
 function scheduleReconnect(){if(left||!code)return;clearTimeout(retryTimer);retryCount++;const d=Math.min(7000,450*Math.pow(1.7,Math.min(retryCount,6)));retryTimer=setTimeout(()=>connectAttempt(),d);pulseStatus();if(latest)render();else view('join');$('joinMsg').textContent='กำลังเชื่อมต่อกลับอัตโนมัติ...'}
 function disconnectTransport(){try{conn?.close()}catch(e){}try{peer?.destroy()}catch(e){}conn=null;peer=null;clearTimeout(connectTimer)}
-function connectAttempt(){if(left||!code||!window.Peer){setStatus('โหลดระบบเชื่อมต่อไม่ได้','bad');return}disconnectTransport();const attempt=++connectGeneration;joining=true;setStatus('↻ กำลังเชื่อม...','warn');$('connectBtn').disabled=true;
+function connectAttempt(){if(left||!code||!window.Peer){setStatus('โหลดระบบเชื่อมต่อไม่ได้','bad');return}const attempt=++connectGeneration;clearTimeout(retryTimer);disconnectTransport();joining=true;setStatus('↻ กำลังเชื่อม...','warn');$('connectBtn').disabled=true;
  const p=new Peer();peer=p;
  connectTimer=setTimeout(()=>{if(connectGeneration!==attempt||conn?.open)return;joining=false;$('connectBtn').disabled=false;disconnectTransport();scheduleReconnect()},9000);
  p.on('open',()=>{if(connectGeneration!==attempt)return;const c=p.connect(PREFIX+code,{reliable:true});conn=c;
