@@ -1,4 +1,4 @@
-<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1024"><title>Little's Trivia 999 — Player</title><style>
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1024"><title>Little's Trivia 999 — Player V2.1</title><style>
 :root{font-family:ui-rounded,system-ui,-apple-system,"Noto Sans Thai",sans-serif;color:#f4f6ff;background:#0b1024;color-scheme:dark;font-synthesis:none}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 12% 0%,#263c70 0,transparent 43%),radial-gradient(ellipse at 94% 20%,#632857 0,transparent 41%),#0b1024}
 button,input{font:inherit}button{cursor:pointer;border:0;touch-action:manipulation}button:disabled{opacity:.38;cursor:not-allowed}
@@ -13,7 +13,7 @@ button,input{font:inherit}button{cursor:pointer;border:0;touch-action:manipulati
 <section id="arena" class="stack hide"><div class="flex space"><span id="round" class="pill">ROUND 01</span><span id="connLabel" class="pill">● ONLINE</span></div><div id="timerWrap" class="panel timerbox"><div id="clock" class="bigclock">01:00</div><div id="hiddenClock" class="bigclock hide bombsign">💣 ???</div><div class="progress"><div id="bar" class="bar"></div></div><div id="timeLabel" class="timerlabel spaced">ระเบิดกำลังทำงาน!</div></div><div class="grid2 no-select"><div id="ta" class="team ta"><div><h2>🔵 A</h2><div class="muted">BLUE TEAM</div></div><button id="passA" class="pass" disabled>ส่งให้ B ➜</button><div id="tagA" class="pill" style="align-self:center">รอรับ</div></div><div id="tb" class="team tb off"><div><h2>🔴 B</h2><div class="muted">RED TEAM</div></div><button id="passB" class="pass" disabled>⬅ ส่งให้ A</button><div id="tagB" class="pill" style="align-self:center">รอรับ</div></div></div><div id="connectionNote" class="connected-note">ฟัง GM อ่านคำถาม → ตอบ → กดส่งระเบิดทันที</div></section>
 <section id="exhausted" class="panel stack hide" style="text-align:center"><div style="font-size:80px">🏆</div><div class="round">ใช้ครบ 999 คำถามแล้ว!</div><p class="muted">GM ต้องเป็นผู้อนุมัติเริ่มคลังใหม่</p></section>
 <section id="end" class="panel stack hide"><div class="boom"><span class="emoji">💥</span><div class="label">BOOM! หมดเวลา</div><div id="loser" class="endteam">TEAM A แพ้!</div><p class="muted">รอ GM เริ่มรอบถัดไป</p></div><div class="grid2"><div class="panel" style="text-align:center"><b>🔵 TEAM A</b><div id="scoreA" class="score">0</div><div class="muted tiny">แพ้สะสม</div></div><div class="panel" style="text-align:center"><b>🔴 TEAM B</b><div id="scoreB" class="score">0</div><div class="muted tiny">แพ้สะสม</div></div></div></section>
-<p class="hint spaced">🚀 เกมเวอร์ชัน 2.0 เชื่อมต่อ GM กลับเองเมื่อเน็ตหลุดช่วงสั้น ๆ และล็อกปุ่มขณะส่ง เพื่อป้องกันกดซ้ำ • ถ้าเน็ตขาดจริง GM เป็นผู้ตัดสินเวลาหมด • หน้าจอนี้ไม่มีคำถามหรือเฉลย</p>
+<p class="hint spaced">🚀 เกมเวอร์ชัน 2.1 ตั้งเวลาได้จาก GM และเชื่อมต่อ GM กลับเองเมื่อเน็ตหลุดช่วงสั้น ๆ และล็อกปุ่มขณะส่ง เพื่อป้องกันกดซ้ำ • ถ้าเน็ตขาดจริง GM เป็นผู้ตัดสินเวลาหมด • หน้าจอนี้ไม่มีคำถามหรือเฉลย</p>
 </main><script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.5/peerjs.min.js"></script><script>
 
 
@@ -44,7 +44,7 @@ function onState(msg){if(typeof msg.seq!=='number'||typeof msg.remainingMs!=='nu
  const now=Date.now();let estimatedOneWay=pingMs>0?Math.min(pingMs/2,450):50;
  if(clockOffset!==null&&Number.isFinite(msg.hostTime)){estimatedOneWay=Math.max(0,Math.min(1000,now+clockOffset-msg.hostTime))}
  const remNow=Math.max(0,msg.remainingMs-(msg.status==='running'?estimatedOneWay:0));
- // The GM always owns the 60s deadline; the player clock is only a synchronized display.
+ // GM owns the round deadline and selected duration; the player display follows host state.
  const nextAnchor=msg.status==='running'?remNow:msg.remainingMs;
  if(!latest||lastSeq!==msg.seq||latest.status!==msg.status){anchorRemain=nextAnchor}else{
   const current=ms();anchorRemain=Math.abs(nextAnchor-current)>300?nextAnchor:current+(nextAnchor-current)*.3
@@ -73,7 +73,7 @@ function connect(){const str=$('roomInput').value.trim().toUpperCase().replace(/
 function leave(){left=true;code='';latest=null;latestSession=null;clearTimers();disconnectTransport();connectGeneration++;try{sessionStorage.removeItem(SAVED_ROOM)}catch(e){}$('connectBtn').disabled=false;setStatus('ยังไม่เชื่อมต่อ');view('join')}
 function pass(team){if(!latest||latest.status!=='running'||latest.team!==team||pendingId||ms()<=0||!conn?.open)return;initAudio();pendingId=String(Date.now())+'-'+Math.random();pendingSeq=latest.seq;try{conn.send({type:'pass',id:pendingId,team,seq:latest.seq})}catch(e){clearPending();render();return}vibration(25);sfx('pass');render();pendingTimer=setTimeout(()=>{if(pendingId){clearPending();render()}},2700)}
 function tick(){if(!latest)return;const remain=ms(),sec=Math.ceil(remain/1000),hidden=latest.status==='running'&&remain<=10000;
- $('clock').classList.toggle('hide',hidden);$('hiddenClock').classList.toggle('hide',!hidden);$('clock').textContent=fmt(remain);$('bar').style.width=remain/60000*100+'%';$('timerWrap').classList.toggle('critical',hidden);
+ $('clock').classList.toggle('hide',hidden);$('hiddenClock').classList.toggle('hide',!hidden);$('clock').textContent=fmt(remain);$('bar').style.width=Math.min(100,Math.max(0,remain/(Number(latest.durationMs)||60000)*100))+'%';$('timerWrap').classList.toggle('critical',hidden);
  if(latest.status==='running'&&sec<=10&&sec>0&&sec!==lastTickSecond){sfx('tick');lastTickSecond=sec}if(latest.status==='running'&&sec>10)lastTickSecond=sec;
  if(latest.status==='running'&&remain<=0){$('passA').disabled=true;$('passB').disabled=true;$('timeLabel').textContent='⏳ รอ GM ตัดสินระเบิด'}}
 $('sound').onclick=()=>{muted=!muted;$('sound').textContent=muted?'🔇 เสียงปิด':'🔊 เสียงเปิด';$('sound').setAttribute('aria-pressed',String(!muted));if(!muted)initAudio()};
