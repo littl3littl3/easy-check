@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>😜 วงเหล้าสุดป่วน | Pixel Party</title>
+<meta name="theme-color" content="#241536"/><meta name="description" content="เกมสุ่มภารกิจวงเหล้าสุดป่วน พิกเซลสีม่วงชมพู 70 กฎ เล่นฟรีบนมือถือ"/>
+<style>
+:root{color-scheme:dark;--bg:#241536;--panel:#36234f;--pink:#ff69b9;--mint:#90f6df;--lav:#c5a2ff}
+*{box-sizing:border-box}body{margin:0;background:#150c29;color:white;font-family:system-ui,-apple-system,"Noto Sans Thai",Tahoma,sans-serif}
+button,input{font:inherit}button{touch-action:manipulation;cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #ffe58f;outline-offset:4px}
+.wrap{max-width:550px;min-height:100dvh;margin:auto;padding:17px 14px 28px;border-left:4px solid #7754aa;border-right:4px solid #7754aa;background:radial-gradient(ellipse at 15% 0,#543376 0,transparent 38%),radial-gradient(ellipse at 90% 72%,#42265a 0,transparent 40%),var(--bg)}
+.top{text-align:center;padding:5px 0 16px}.sparkle{color:#ffe597;letter-spacing:8px;font-size:17px}.eyebrow{color:var(--mint);font-size:12px;font-weight:900;letter-spacing:2px;margin-top:8px}
+h1{font-size:clamp(27px,6vw,34px);line-height:1.3;margin:8px 0 5px;color:#ffd0ed;text-shadow:3px 3px #673480}
+.mascots{font-size:30px;margin:7px}.stats{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+.stat{font-size:12px;font-weight:800;padding:7px 11px;border:2px solid #9469c5;background:#503573;border-radius:4px;box-shadow:2px 2px #160d26}
+.stage{position:relative;background:#4b2f70;border:5px solid #ffa2d9;box-shadow:inset 0 0 0 3px #735094,0 5px #120b21;border-radius:7px;min-height:304px;padding:25px 17px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:23px;text-align:center}
+.tag{background:#ffc1e4;color:#30153c;font-weight:950;font-size:13px;padding:8px 12px;border-radius:3px}
+.rule{font-size:clamp(28px,7.5vw,40px);font-weight:950;line-height:1.45;color:white;text-shadow:0 2px #281537;overflow-wrap:anywhere}
+.meta{font-size:13px;font-weight:750;color:#f4d8ff}.progressbar{height:8px;margin:17px 0 11px;border:1px solid #ad80d1;border-radius:2px;background:#523a68;overflow:hidden}
+.fill{height:100%;width:0;background:repeating-linear-gradient(90deg,#88f3da 0 15px,#ffe79d 15px 23px)}
+.spin{width:100%;border:4px solid #ffd3ed;border-radius:8px;min-height:151px;padding:13px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;color:white;background:linear-gradient(#ff88cc,#ee439c);box-shadow:0 6px #a52b76}
+.spin:active:not(:disabled){box-shadow:0 1px #a52b76;transform:translateY(5px)}.spin:disabled{opacity:.78;cursor:wait}
+.spin .emoji{font-size:52px;line-height:1.1}.spin strong{font-size:32px;font-weight:950;color:white}.spin small{font-size:12px;font-weight:800;color:white}
+.settings{margin-top:20px;padding:14px;background:#382552;border:2px solid #684b91;border-radius:6px;display:grid;gap:14px}
+.setting{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px;font-weight:750;color:white}
+.setting label{display:flex;align-items:center;gap:10px;cursor:pointer}
+input[type=checkbox]{accent-color:#ff91ce;width:19px;height:19px;flex-shrink:0}.counter{color:var(--mint);font-weight:950}
+.controls{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.controls button{border:2px solid #d8bcff;background:#70509f;color:white;font-weight:900;border-radius:6px;min-height:61px;padding:9px}
+.controls button+button{background:#286968;border-color:#98fbe7}
+.history{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:16px;font-size:12px;color:#f1d9fc}
+.chip{background:#5b3a7c;border:1px solid #9973bf;padding:5px 9px;border-radius:4px;color:white}
+.panel{margin-top:16px;padding:14px;background:#37244f;border:2px solid #74569a;border-radius:7px;display:none}
+.panel.open{display:block}.panel h2{font-size:19px;margin:0 0 6px;color:white}
+.note{font-size:12px;color:#e4d6f0;line-height:1.6}
+.search{width:100%;border:2px solid #bc97e6;border-radius:5px;background:#fff8ff;color:#241337;padding:11px;margin:13px 0 10px;outline:none}
+.filters{display:flex;gap:5px;flex-wrap:wrap}.filters button{border:1px solid #9574b4;background:#5b4279;color:white;border-radius:4px;padding:8px 11px;font-size:12px;font-weight:850}
+.filters .active{background:#ff94ce;border-color:#ffd2ed;color:#2e133c}
+.rulelist{display:grid;gap:7px;max-height:430px;overflow:auto;margin-top:11px}
+.item{display:flex;align-items:center;gap:9px;background:#4c3566;border-radius:4px;padding:10px 8px;font-size:13px;line-height:1.6;color:white}
+.item .id{flex-shrink:0;min-width:36px;border-radius:3px;text-align:center;background:#7a56a0;color:white;padding:4px;font-weight:900}
+.item .words{flex:1;color:white}.new{color:var(--mint);font-size:10px;font-weight:900}
+.footer{font-size:11px;line-height:1.65;text-align:center;color:#e6d2f2;margin-top:17px}
+@media(max-width:380px){.wrap{padding:11px}.stage{min-height:285px;padding:20px 10px}.rule{font-size:27px}.spin strong{font-size:28px}}
+@media(prefers-reduced-motion:reduce){.spin:active:not(:disabled){transform:none}}
+</style></head>
+<body><main class="wrap">
+<header class="top"><div class="sparkle">✦ ★ ✦ ★ ✦</div><div class="eyebrow">PIXEL PARTY · LUCKY SPIN V8.1</div><h1>😜 วงเหล้าสุดป่วน</h1><div class="mascots">🐱 💗 🐰</div>
+<div class="stats"><span class="stat" id="total">70 กฎ</span><span class="stat" id="round">รอบ 0</span><span class="stat">⚡ 1.5 วิ</span></div></header>
+<section class="stage" aria-label="ผลการสุ่ม"><div class="tag" id="tag">✦ READY TO PLAY ✦</div><div class="rule" id="rule" aria-live="off">ใครจะโดนก่อนดี? 😜</div><div class="meta" id="meta">กดปุ่มสีชมพูเพื่อเริ่มสุ่ม!</div></section>
+<div class="progressbar"><div id="bar" class="fill"></div></div>
+<button id="spin" class="spin" type="button"><span class="emoji">😜</span><strong id="spinlabel">กดสุ่มเลย!</strong><small id="spinhint">✦ ข้อความวิ่ง 1.5 วิแล้วหยุด ✦</small></button>
+<div class="settings">
+<div class="setting"><label><input type="checkbox" id="unique" checked/> สุ่มไม่ซ้ำจนครบ</label><span class="counter" id="progress">0/70</span></div>
+<div class="setting"><label><input type="checkbox" id="sound"/> 🔊 เสียงเอฟเฟกต์</label><span>🎵</span></div>
+</div>
+<div class="controls"><button id="view" type="button">📖 ดูกติกาทั้งหมด</button><button id="reset" type="button">🔄 เริ่มเกมใหม่</button></div>
+<div class="history" id="history"></div>
+<section class="panel" id="panel"><h2>📖 คลังภารกิจ</h2><div class="note">55 กฎเดิม + 15 กฎใหม่ · ติ๊กเปิด/ปิดกฎใหม่ได้ตามใจ</div>
+<input type="search" id="search" class="search" placeholder="ค้นหาเลขหรือข้อความกติกา"/>
+<div class="filters"><button class="active" data-filter="all">ทั้งหมด</button><button data-filter="old">55 เดิม</button><button data-filter="new">15 ใหม่</button></div><div class="rulelist" id="list"></div></section>
+<footer class="footer">💗 ส่งมือถือวนกัน · จิบตามสมัครใจ · ใช้น้ำเปล่าแทนได้ · ทุกคนข้ามได้</footer>
+</main>
+<script>
+(function(){
+"use strict";
+var rules=[{"id":1,"text":"ตัวเองจิบ 1 ครั้ง 🍺","isNew":false},{"id":2,"text":"คนซ้ายจิบ 1 ครั้ง 👈","isNew":false},{"id":3,"text":"คนขวาจิบ 1 ครั้ง 👉","isNew":false},{"id":4,"text":"เลือกเพื่อน 1 คนให้จิบ 🎯","isNew":false},{"id":5,"text":"ทุกคนชนแก้ว 🥂","isNew":false},{"id":6,"text":"รอดตัว! ไม่ต้องทำอะไร 🎉","isNew":false},{"id":13,"text":"คนผมสั้นจิบ 💇","isNew":false},{"id":14,"text":"คนใส่นาฬิกาจิบ ⌚","isNew":false},{"id":15,"text":"คนใส่แว่นจิบ 🤓","isNew":false},{"id":16,"text":"คนมาถึงคนสุดท้ายจิบ 🚶","isNew":false},{"id":17,"text":"เป่ายิงฉุบกับคนซ้าย คนแพ้จิบ ✊","isNew":false},{"id":18,"text":"เลือกเพื่อน 1 คนชนแก้วด้วยกัน 🥂","isNew":false},{"id":19,"text":"ทุกคนยกแก้วพร้อมกัน 🙌","isNew":false},{"id":20,"text":"แจ็กพอต! ทุกคนรอดตัว 🎰","isNew":false},{"id":22,"text":"เป่ายิงฉุบกับคนขวา คนแพ้จิบ ✌️","isNew":false},{"id":23,"text":"คนใส่รองเท้าสีดำจิบ 👟","isNew":false},{"id":24,"text":"คนใส่รองเท้าสีขาวจิบ 🤍","isNew":false},{"id":30,"text":"คนใส่เสื้อลายจิบ 👕","isNew":false},{"id":31,"text":"คนใส่เสื้อไม่มีลายจิบ 🎽","isNew":false},{"id":34,"text":"คนที่ถือมือถืออยู่จิบ 📱","isNew":false},{"id":51,"text":"คนซ้าย 2 ที่ จิบ 1 ครั้ง 👈","isNew":false},{"id":52,"text":"คนขวา 2 ที่ จิบ 1 ครั้ง 👉","isNew":false},{"id":53,"text":"คนที่นั่งตรงข้ามจิบ 1 ครั้ง 🫵","isNew":false},{"id":54,"text":"คนติดซ้ายและขวา จิบคนละ 1 ครั้ง 🍻","isNew":false},{"id":56,"text":"คนที่นั่งไกลจากคนกดที่สุดจิบ 🎯","isNew":false},{"id":58,"text":"เลือกเพื่อน 3 คน ให้จิบคนละ 1 ครั้ง 😜","isNew":false},{"id":59,"text":"เลือกเพื่อน 2 คน ให้ชนแก้วกัน 🥂","isNew":false},{"id":60,"text":"เลือกเพื่อน 3 คน ให้ชนแก้วกัน 🍻","isNew":false},{"id":61,"text":"เลือกเพื่อน 2 คน เป่ายิงฉุบ คนแพ้จิบ ✊","isNew":false},{"id":65,"text":"ตัวเองจิบ 2 ครั้ง 🍺","isNew":false},{"id":66,"text":"คนซ้ายจิบ 2 ครั้ง 👈","isNew":false},{"id":67,"text":"คนขวาจิบ 2 ครั้ง 👉","isNew":false},{"id":68,"text":"เลือกเพื่อน 2 คน จิบคนละ 2 ครั้ง 🎯","isNew":false},{"id":71,"text":"เลือกเพื่อน 1 คน ให้จิบ 2 ครั้ง 😈","isNew":false},{"id":72,"text":"เลือกเพื่อน 2 คน จิบคนละ 1 ครั้ง 🎯","isNew":false},{"id":73,"text":"เลือกเพื่อน 3 คน จิบคนละ 2 ครั้ง 😜","isNew":false},{"id":74,"text":"เลือกเพื่อน 1 คน จิบพร้อมกันคนละ 1 ครั้ง 🥂","isNew":false},{"id":75,"text":"เลือกเพื่อน 1 คน แล้วให้คนนั้นเลือกอีก 1 คนมาจิบ 1 ครั้ง 🔗","isNew":false},{"id":79,"text":"คนซ้าย 2 ที่ จิบ 2 ครั้ง 👈","isNew":false},{"id":80,"text":"คนขวา 2 ที่ จิบ 2 ครั้ง 👉","isNew":false},{"id":81,"text":"คนซ้ายกับคนขวาเป่ายิงฉุบ คนแพ้จิบ 1 ครั้ง ✊","isNew":false},{"id":82,"text":"คนตรงข้าม เลือกเพื่อน 1 คนให้จิบ 1 ครั้ง 🫵","isNew":false},{"id":83,"text":"คนซ้ายเป็นคนเลือก 1 คนให้จิบ 1 ครั้ง 👈","isNew":false},{"id":84,"text":"คนขวาเป็นคนเลือก 1 คนให้จิบ 1 ครั้ง 👉","isNew":false},{"id":85,"text":"คนซ้ายกับคนขวาชนแก้วกัน 🥂","isNew":false},{"id":87,"text":"คนใส่กางเกงขายาวจิบ 1 ครั้ง 👖","isNew":false},{"id":88,"text":"คนใส่กางเกงขาสั้นจิบ 1 ครั้ง 🩳","isNew":false},{"id":89,"text":"คนใส่รองเท้าแตะจิบ 1 ครั้ง 🩴","isNew":false},{"id":90,"text":"คนใส่รองเท้าผ้าใบจิบ 1 ครั้ง 👟","isNew":false},{"id":91,"text":"คนผมยาวจิบ 1 ครั้ง 💇","isNew":false},{"id":92,"text":"คนใส่สร้อยจิบ 1 ครั้ง 📿","isNew":false},{"id":93,"text":"คนใส่แหวนจิบ 1 ครั้ง 💍","isNew":false},{"id":95,"text":"ทุกคนจิบคนละ 1 ครั้ง 🍻","isNew":false},{"id":97,"text":"ทุกคนชูมือ คนที่ชูช้าที่สุดจิบ 1 ครั้ง 🙋","isNew":false},{"id":100,"text":"โบนัส! เลือกเพื่อน 1 คนให้รอดตาถัดไป 🛡️","isNew":false},{"id":101,"text":"คนที่นั่งใกล้ประตูที่สุดจิบ 1 ครั้ง 🚪","isNew":true},{"id":102,"text":"คนที่นั่งใกล้หน้าต่างที่สุดจิบ 1 ครั้ง 🪟","isNew":true},{"id":103,"text":"คนที่นั่งใกล้ลำโพงที่สุดจิบ 1 ครั้ง 🔊","isNew":true},{"id":104,"text":"คนซ้ายเลือกเพื่อน 2 คน ให้จิบคนละ 1 ครั้ง 👈","isNew":true},{"id":105,"text":"คนขวาเลือกเพื่อน 2 คน ให้จิบคนละ 1 ครั้ง 👉","isNew":true},{"id":106,"text":"เลือกเพื่อน 1 คนเป่ายิงฉุบ คนแพ้จิบ 2 ครั้ง ✊","isNew":true},{"id":107,"text":"เลือกเพื่อน 2 คนแข่งจ้องตา คนหลบตาก่อนจิบ 1 ครั้ง 👀","isNew":true},{"id":108,"text":"คนที่แบตมือถือเหลือน้อยที่สุดจิบ 1 ครั้ง 🔋","isNew":true},{"id":109,"text":"คนใส่เสื้อสีสว่างที่สุดจิบ 1 ครั้ง 🌈","isNew":true},{"id":110,"text":"คนใส่เสื้อสีเข้มที่สุดจิบ 1 ครั้ง 🌚","isNew":true},{"id":111,"text":"เลือกเพื่อน 1 คนให้ชนแก้วกับคนซ้ายของเขา 🥂","isNew":true},{"id":112,"text":"เลือกเพื่อน 1 คนให้ชนแก้วกับคนขวาของเขา 🍻","isNew":true},{"id":113,"text":"เลือกเพื่อน 2 คนแข่งชูมือ ใครช้าจิบ 1 ครั้ง 🙋","isNew":true},{"id":114,"text":"ทุกคนย้ายที่นั่งไปทางซ้าย 1 ที่ 🔄","isNew":true},{"id":115,"text":"สลับที่นั่งกับคนที่อยู่ไกลที่สุดจากตัวเอง 🎯","isNew":true}];
+var e=function(id){return document.getElementById(id)};
+var ui={tag:e("tag"),rule:e("rule"),meta:e("meta"),bar:e("bar"),spin:e("spin"),spinlabel:e("spinlabel"),spinhint:e("spinhint"),unique:e("unique"),sound:e("sound"),total:e("total"),round:e("round"),progress:e("progress"),history:e("history"),view:e("view"),reset:e("reset"),panel:e("panel"),list:e("list"),search:e("search")};
+var enabled=new Set(rules.filter(function(r){return r.isNew}).map(function(r){return r.id}));
+var used=new Set(),history=[],round=0,rolling=false,filter="all",audio=null;
+var active=function(){return rules.filter(function(r){return !r.isNew||enabled.has(r.id)})};
+var rand=function(a){return a[Math.floor(Math.random()*a.length)]};
+function beep(freq,len){if(!ui.sound.checked)return;try{var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;audio=audio||new AC();if(audio.state==="suspended")audio.resume();var osc=audio.createOscillator(),gain=audio.createGain(),t=audio.currentTime;osc.type="sine";osc.frequency.value=freq;gain.gain.setValueAtTime(.045,t);gain.gain.exponentialRampToValueAtTime(.001,t+len);osc.connect(gain);gain.connect(audio.destination);osc.start(t);osc.stop(t+len)}catch(err){}}
+function refresh(){
+ var n=active().length;ui.total.textContent=n+" กฎ";ui.round.textContent="รอบ "+round;
+ ui.progress.textContent=ui.unique.checked?used.size+"/"+n:"∞";
+ ui.history.replaceChildren();
+ if(history.length){var lab=document.createElement("span");lab.textContent="⭐ ล่าสุด";ui.history.append(lab);history.forEach(function(id){var x=document.createElement("span");x.className="chip";x.textContent="#"+id;ui.history.append(x)})}
+}
+function show(r,running){ui.rule.textContent=r.text;ui.tag.textContent=running?"⚡ กำลังสุ่ม ⚡":"★ ภารกิจที่สุ่มได้ ★";ui.meta.textContent=running?"ลุ้นอีกนิด…":"กฎ #"+r.id+" · ส่งมือถือให้คนถัดไป"}
+function render(){
+ ui.list.replaceChildren();var q=ui.search.value.trim().toLowerCase();
+ var filtered=rules.filter(function(r){return (filter==="all"||(filter==="old"&&!r.isNew)||(filter==="new"&&r.isNew))&&(r.text.toLowerCase().includes(q)||String(r.id).includes(q))});
+ if(!filtered.length){var blank=document.createElement("div");blank.textContent="ไม่พบกติกา";ui.list.append(blank)}
+ filtered.forEach(function(r){
+ var item=document.createElement("div");item.className="item";
+ var number=document.createElement("span");number.className="id";number.textContent=r.id;item.append(number);
+ var words=document.createElement("span");words.className="words";words.textContent=r.text;item.append(words);
+ if(r.isNew){var tag=document.createElement("span");tag.className="new";tag.textContent="NEW";item.append(tag);
+ var input=document.createElement("input");input.type="checkbox";input.checked=enabled.has(r.id);input.setAttribute("aria-label","เปิดใช้กฎ "+r.id);
+ input.addEventListener("change",function(){if(rolling){input.checked=enabled.has(r.id);return}if(input.checked)enabled.add(r.id);else enabled.delete(r.id);used.clear();refresh()});item.append(input)}
+ ui.list.append(item)
+ });
+}
+ui.view.addEventListener("click",function(){ui.panel.classList.toggle("open");ui.view.textContent=ui.panel.classList.contains("open")?"📕 ซ่อนกติกา":"📖 ดูกติกาทั้งหมด";if(ui.panel.classList.contains("open"))render()});
+document.querySelectorAll("[data-filter]").forEach(function(button){button.addEventListener("click",function(){filter=button.dataset.filter;document.querySelectorAll("[data-filter]").forEach(function(b){b.classList.toggle("active",b===button)});render()})});
+ui.search.addEventListener("input",render);
+ui.unique.addEventListener("change",function(){if(rolling)return;used.clear();refresh()});
+ui.reset.addEventListener("click",function(){if(rolling)return;round=0;used.clear();history=[];ui.bar.style.width="0%";ui.rule.textContent="ใครจะโดนก่อนดี? 😜";ui.tag.textContent="✦ READY TO PLAY ✦";ui.meta.textContent="กดปุ่มสีชมพูเพื่อเริ่มสุ่ม!";ui.spinlabel.textContent="กดสุ่มเลย!";refresh()});
+ui.spin.addEventListener("click",function(){
+ if(rolling)return;
+ var pool=active();
+ if(ui.unique.checked){var remaining=pool.filter(function(r){return !used.has(r.id)});if(remaining.length){pool=remaining}else{used.clear()}}
+ if(!pool.length)return;
+ var answer=rand(pool),start=null,last=-999,count=0,duration=1500;
+ rolling=true;ui.spin.disabled=true;ui.unique.disabled=true;ui.spinlabel.textContent="กำลังสุ่ม…";ui.spinhint.textContent="⚡ เร็ว… แล้วชะลอ";
+ function frame(now){
+ if(start===null)start=now;
+ var p=Math.min((now-start)/duration,1);
+ ui.bar.style.width=(p*100).toFixed(1)+"%";
+ var interval=48+Math.pow(p,2.5)*225;
+ if(now-last>=interval&&p<.98){show(rand(pool),true);last=now;count++;if(count%5===0)beep(550,.025)}
+ if(p<1){requestAnimationFrame(frame)}else{
+ show(answer,false);round++;history=[answer.id].concat(history).slice(0,7);if(ui.unique.checked)used.add(answer.id);
+ rolling=false;ui.spin.disabled=false;ui.unique.disabled=false;
+ ui.spinlabel.textContent="สุ่มอีกครั้ง!";ui.spinhint.textContent="✦ แตะเพื่อรับภารกิจใหม่ ✦";beep(880,.14);refresh()
+ }
+ }
+ requestAnimationFrame(frame)
+});
+refresh();render();
+})();
+</script></body></html>
