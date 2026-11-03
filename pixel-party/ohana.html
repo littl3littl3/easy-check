@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#20123e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="เร่งรอบ OHANA">
+  <meta name="description" content="เกมไพ่ OHANA ในธีมพิกเซลม่วงชมพู สุ่ม 52 ใบ 13 กติกา เล่นง่ายบนมือถือ">
+  <title>🃏 เร่งรอบ OHANA — Pixel Party Cards</title>
+<style>
+:root{color-scheme:dark;--bg:#171130;--navy:#20143e;--ink:#261442;--lav:#b894ff;--pink:#ff65bc;--cream:#fff7ff;--teal:#76eee1;--yellow:#ffe16d;--muted:#c6b4e9;--shadow:#6931a4;--pixel:'Courier New',ui-monospace,monospace;--thai:-apple-system,BlinkMacSystemFont,'Noto Sans Thai','Thonburi',sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--thai);color:white;background:#130d28;min-height:100dvh;-webkit-tap-highlight-color:transparent}button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{cursor:wait;filter:saturate(.6)}button:focus-visible,input:focus-visible{outline:3px solid #70f0e8;outline-offset:4px}
+.app{width:min(100%,520px);min-height:100dvh;margin:auto;position:relative;overflow:hidden;padding:calc(22px + env(safe-area-inset-top,0px)) 17px calc(30px + env(safe-area-inset-bottom,0px));background:radial-gradient(ellipse at 5% 8%,#5c2975a8,transparent 40%),radial-gradient(ellipse at 100% 60%,#41328b8a,transparent 52%),linear-gradient(165deg,#20143e,#17112f 70%,#261339);border-left:2px solid #61307d;border-right:2px solid #61307d}
+.app::before{content:"";pointer-events:none;position:absolute;inset:0;opacity:.58;background-image:radial-gradient(#ffe67e 1.5px,transparent 2px),radial-gradient(#f07dda 1.5px,transparent 2px),radial-gradient(#7ceaf1 2px,transparent 3px);background-size:91px 101px,137px 117px,167px 193px;background-position:8px 7px,43px 57px,103px 23px}
+.app>*{position:relative;z-index:1}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}.top .eyebrow{font:800 12px/1.2 var(--pixel);letter-spacing:2px;color:#e5beff}.pill{background:#3d275d;border:2px solid #9a66d8;border-radius:8px;padding:7px 10px;font-weight:900;color:#fff3ff;font-size:13px;box-shadow:3px 3px 0 #150c2a;white-space:nowrap}
+.hero{text-align:center;position:relative;padding:2px 0 25px}.hero-art{display:flex;justify-content:center;align-items:end;gap:4px;margin-top:-4px}.sprite{width:87px;height:87px;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(4px 5px 0 #241046);transform:rotate(-6deg)}.sprite.bunny{width:80px;height:80px;transform:rotate(7deg)}.hero-emoji{font-size:43px;line-height:1;filter:drop-shadow(2px 4px 0 #471653)}.title{font-size:clamp(28px,7vw,42px);font-weight:1000;line-height:1.36;letter-spacing:-1px;margin:0;text-shadow:3px 0 #66326b,-3px 0 #66326b,0 3px #66326b,0 -3px #66326b,5px 5px #241035}.title .a{color:#ffbde8}.title .b{color:#ffdf6a}.title .c{color:#87fff0}.subtitle{display:inline-block;margin-top:9px;padding:6px 18px;background:#7638ad;border:3px solid #a568e2;box-shadow:4px 4px 0 #251045;font:900 13px/1.2 var(--pixel);letter-spacing:1px;color:white;transform:rotate(-1deg)}
+.stars{position:absolute;font-size:20px;line-height:1}.stars.one{top:3%;left:7%;color:#fde37d}.stars.two{top:25%;right:6%;color:#ff8ed6}.stars.three{top:62%;left:3%;color:#88faf0}
+.board-wrap{padding:8px 4px 11px}.board{background:#fff7ff;border:5px solid #e889f3;outline:4px solid #36205e;box-shadow:0 8px 0 #9e4fbc,0 12px 0 #3c2058;position:relative;min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 24px 33px;color:#261442;text-align:center;overflow:visible;border-radius:4px}.board::before,.board::after{content:"";position:absolute;width:15px;height:15px;background:#ff9ed4;border:3px solid #512778}.board::before{left:10px;top:10px}.board::after{right:10px;bottom:10px}.board-tag{position:absolute;top:-19px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:9px 22px;background:#7831ad;color:white;border:4px solid #d885ec;box-shadow:0 5px 0 #472368;font-weight:900;font-size:16px}.board-tag span{color:#ff9cdc}.board .corner{position:absolute;font-size:28px;filter:drop-shadow(2px 2px 0 #8744ad)}.corner.lt{left:17px;top:53px}.corner.rt{right:15px;top:59px}.corner.lb{left:18px;bottom:20px}.corner.rb{right:15px;bottom:17px}
+.task{font-size:clamp(31px,7.5vw,43px);font-weight:1000;line-height:1.49;letter-spacing:-.8px;overflow-wrap:break-word;max-width:100%;margin:10px 0 12px;text-wrap:balance;color:#2b174f}.task.is-rolling{opacity:.6;filter:blur(.4px)}.task-foot{font-size:13px;color:#825ca5;font-weight:800;line-height:1.5}.task-emoji{font-size:47px;line-height:1;margin-bottom:6px}.tiny-hearts{position:absolute;left:50%;transform:translateX(-50%);bottom:7px;color:#dd74bc;font-size:17px;letter-spacing:9px;white-space:nowrap}
+.spin{display:flex;align-items:center;justify-content:center;gap:14px;width:calc(100% - 6px);margin:22px 3px 12px;padding:23px 13px 22px;min-height:126px;border:5px solid #ffd1ed;border-radius:10px;background:linear-gradient(#ff9edc 0 8%,#ff62b9 9% 85%,#eb409d 86%);color:#fff;box-shadow:0 8px 0 #9c2c80,0 12px 0 #361b59,inset 0 0 0 4px #ea3c9b;text-shadow:3px 3px 0 #7d2b87;transition:transform .1s,box-shadow .1s}.spin:active{transform:translateY(6px);box-shadow:0 2px 0 #9c2c80,0 6px 0 #361b59}.spin-face{font-size:65px;line-height:1;filter:drop-shadow(3px 4px 0 #ae398d)}.spin .spin-text{display:flex;flex-direction:column;align-items:flex-start}.spin strong{font-size:clamp(28px,8vw,40px);font-weight:1000;line-height:1.2;letter-spacing:-1px}.spin small{font-size:12px;font-weight:900;color:#fff2f9;margin-top:6px;text-shadow:none}.spin:not(:disabled) .spin-face{animation:bop 1.7s ease-in-out infinite}@keyframes bop{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(9deg) scale(1.09)}}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:18px}.mini-card{border:3px solid #7965b9;border-radius:5px;background:#30224e;color:#fff;box-shadow:0 4px 0 #140c2a;min-height:66px;padding:9px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:15px;font-weight:900}.mini-card.cyan{background:#70e9de;color:#2d2552;border-color:#adfff4;box-shadow:0 4px 0 #2d819c}.mini-card.purple{background:#b78cf4;color:#2c1a50;border-color:#e2cafa;box-shadow:0 4px 0 #6e40a9}.mini-card:active{transform:translateY(3px);box-shadow:0 1px 0 #140c2a}.mini-card .ico{font-size:23px}
+.setting{margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#281d45;border:2px solid #624a92;padding:12px;border-radius:8px}.setting-left{display:flex;align-items:center;gap:8px;font-weight:850;font-size:14px}.switch{width:55px;height:31px;flex-shrink:0;border:3px solid #967acc;border-radius:17px;background:#665078;position:relative;padding:0}.switch::before{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;background:#f9ecff;border-radius:3px;box-shadow:2px 2px 0 #392552;transition:transform .14s}.switch[aria-checked="true"]{background:#64d8b2;border-color:#a4ffe4}.switch[aria-checked="true"]::before{transform:translateX(24px)}.progress{font:700 12px var(--thai);color:#cfb8eb;text-align:center;margin-top:9px;min-height:18px}
+.history{margin-top:20px;border-top:2px dashed #6b508c;padding-top:15px}.history h2{margin:0 0 11px;font-size:13px;color:#dbbaff;letter-spacing:.2px}.history-content{display:flex;gap:7px;flex-wrap:wrap}.history-empty{font-size:12px;color:#a997c8}.chip{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:34px;border:2px solid #8368bf;border-radius:6px;background:#34234f;font:700 12px var(--pixel);color:#fff;box-shadow:2px 2px 0 #170f30}
+.foot{text-align:center;font-size:12px;line-height:1.8;color:#c3afe3;margin-top:24px}.foot strong{color:#ffaad8}
+.modal{position:fixed;inset:0;background:#100a26cf;z-index:99;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}.modal.open{display:flex}.dialog{display:flex;flex-direction:column;max-width:520px;width:100%;max-height:min(88dvh,850px);border:4px solid #c386f5;background:#25193d;box-shadow:0 8px 0 #110a22;overflow:hidden;border-radius:8px}.dialog-head{display:flex;align-items:center;justify-content:space-between;padding:16px;gap:10px;border-bottom:3px solid #543a7f}.dialog-title{font-size:21px;font-weight:1000}.close{border:2px solid #e6cafa;background:#533d7b;color:white;border-radius:5px;font-size:20px;font-weight:900;width:42px;height:42px}.search{margin:14px 14px 4px;background:#36264f;border:2px solid #7856a7;border-radius:5px;padding:12px;color:white;font-size:16px;width:calc(100% - 28px);outline-offset:2px}.search::placeholder{color:#c2a9d9}.rule-list{overflow:auto;overscroll-behavior:contain;padding:12px 14px 20px}.group-label{font-size:13px;color:#f5c0fb;margin:18px 0 10px;font-weight:900}.rule-row{display:flex;align-items:flex-start;gap:12px;background:#34264e;border:2px solid #4e386f;border-radius:6px;padding:12px 11px;margin-bottom:8px;color:#fff;font-size:15px;font-weight:750;line-height:1.55}.rule-id{font:900 13px var(--pixel);background:#a56ce0;min-width:39px;padding:6px 3px;text-align:center;border:2px solid #ddc0ff;color:#24143f;flex-shrink:0;border-radius:4px}.hint{font-size:12px;color:#bba7da;margin:0 14px 8px}
+.float-confetti{position:fixed;left:50%;top:42%;z-index:9;pointer-events:none;width:9px;height:9px;animation:burst .7s ease-out forwards;background:var(--c);box-shadow:2px 2px 0 #512167}@keyframes burst{from{transform:translate(0,0) rotate(0);opacity:1}to{transform:translate(var(--dx),var(--dy)) rotate(540deg);opacity:0}}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:101;background:#fff0fb;color:#311751;font-size:14px;font-weight:900;padding:11px 17px;border:3px solid #a76fe4;box-shadow:4px 4px 0 #35144e;display:none;white-space:nowrap;max-width:90vw;text-align:center}.toast.show{display:block}
+@media(min-width:540px){.app{padding-inline:34px;min-height:100vh}.board{min-height:375px}.spin{min-height:148px}}@media(max-width:355px){.app{padding-inline:12px}.board{padding:51px 15px 34px;min-height:318px}.task{font-size:30px}.spin{gap:9px}.spin-face{font-size:50px}.spin strong{font-size:29px}.mini-card{font-size:13px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* OHANA cards: retain the original Pixel Party layout */
+.board{min-height:375px;padding:51px 19px 35px}
+.task{font-size:clamp(26px,6.5vw,36px);line-height:1.38;margin:7px 0 8px}
+.task-detail{font-size:clamp(14px,3.6vw,16px);font-weight:750;line-height:1.63;color:#56386f;max-width:100%;overflow-wrap:break-word;text-wrap:pretty;margin-bottom:8px}
+.task-emoji{font-family:var(--pixel);font-size:clamp(48px,13vw,66px);font-weight:1000;line-height:1.12;letter-spacing:-4px;color:#36204b;text-shadow:2px 2px 0 #e4b8f6;min-height:54px}
+.task-emoji.red-suit{color:#db3585}
+.task-foot{margin-top:6px}
+.k-panel{margin-top:20px;padding:14px;background:#33234e;border:2px solid #8965ba;border-radius:7px;display:flex;flex-direction:column;gap:8px}
+.k-panel label{font-size:15px;font-weight:950;color:#ffe08b}
+.k-panel input{width:100%;border:2px solid #976dc9;border-radius:5px;background:#241631;color:#fff;font-size:16px;padding:12px;outline-offset:3px}
+.k-panel input::placeholder{color:#baa5d0}
+.k-panel small{font-size:12px;color:#d5c1ee;line-height:1.55}
+.global-rule{margin-top:16px;padding:14px 15px;border:2px dashed #f6a5da;border-radius:7px;background:#4a285b}
+.global-rule strong{font-size:15px;color:#ffe1f1}
+.global-rule p{margin:7px 0 0;font-size:14px;line-height:1.55;font-weight:750}
+@media(max-width:355px){.board{min-height:380px}.task{font-size:26px}.task-detail{font-size:14px}}
+</style>
+</head>
+<body>
+<main class="app">
+  <div class="top"><span class="eyebrow">✦ PIXEL PARTY ✦</span><span class="pill">💜 <span id="ruleCount">52</span> ใบ · 13 กฎ</span></div>
+  <header class="hero">
+    <span class="stars one">✦</span><span class="stars two">♥</span><span class="stars three">✧</span>
+    <div class="hero-art"><img class="sprite" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAYAAAA+VemSAAAESklEQVR4nO3dsa0UVxSA4QU5cRlIFGCR4AZA7gDRgAMnRHYRJiIhoAFEBVi4AZNYLgDJZRDi3Aww+3bf3PvPfF/4pKcd7e6voz26s3s6AQAAAAAAAAAAAAAAAAAAAAAAAAAAAADwVXdGX8C3PLz/5NP///b+w5vpr5ue4nvt7ugLAG5OwBAmYAgTMIR9N/oCbmJp2bBk9gUE21j7fikygSFMwBAmYAgTMIQll1hrFU/WcJk9L6yWmMAQJmAIEzCECRjCdr3EWuIUV9PRllNrmcAQJmAIEzCECRjCDrfEWssprnEsrNYzgSFMwBAmYAgTMIQdbon117NfP/vbjy+er/pfp7guM2o5dclrPjsTGMIEDGEChjABQ9jhllhLrr3kcIprroXVnpnAECZgCBMwhAkYwqZfrLi1jEtdsqScffloAkOYgCFMwBAmYAib+gP66WSJxXxmWmyZwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAEOY7sc7w7OffRl/CYb149fvoS5iSCQxhAoYwAUOYgCFsmtuiTqdxtw5aTu3HqGXXqFsMTWAIEzCECRjCBAxhw5ZYWyysLKf4ki2WXVsstkxgCBMwhAkYwgQMYbu5ndDCinMsvV+KtyyawBAmYAgTMIQJGMI2WWL5hUGOaOl9f+3TWSYwhAkYwgQMYQKGsORJLKeuuA3F01kmMIQJGMIEDGEChrDkEmuUp788uPH/vn759xWvZC6el3FMYAgTMIQJGMIEDGHTL7GcumKk2U9nmcAQJmAIEzCECRjCpl9izcSpoWWel3FMYAgTMIQJGMIEDGGWWGfY4gRO8eSZ52UcExjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAEOZ2wh259m19buGbnwkMYQKGMAFDmIAhzBLrDJY6yzwv45jAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQtuuTWE+//zTkcV9/vDPkcffC67aeCQxhAoYwAUOYgCFs10uso3Fb3/GYwBAmYAgTMIQJGMIssSZz7S9nH8VCbRsmMIQJGMIEDGEChrDpl1hLSx0LktPpj0ePhzzuT3++G/K4o8y+VDSBIUzAECZgCBMwhE2/xLpE8TuOVi/o/v3nVq/jS7ZYIBZft1FMYAgTMIQJGMIEDGHJJZbTWdyG2U9dLTGBIUzAECZgCBMwhG2yxHr/4c1nR2se3n8y5ifoduLtvR9GXwLfsPS+vzYTGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwobdTuh0FnuyxamrJSYwhAkYwgQMYQKGsKm+E8tii4JRC6slJjCECRjCBAxhAoawqZZYSyy2GGmmhdUSExjCBAxhAoYwAUPY1B/Qz2GxxaVmX1gtMYEhTMAQJmAIEzCE5T60X8qy63iKy6m1TGAIEzCECRjCBAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOzXf08uuzYjApkZAAAAAElFTkSuQmCC" alt="แมวพิกเซลน่ารัก"><span class="hero-emoji" aria-hidden="true">😜</span><img class="sprite bunny" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAYAAAA+VemSAAAEM0lEQVR4nO3dsW0bSRSAYergapypgCtATl2CgItdiuMDVIJTqwAXoMztyJlxAQ9YaEcz89PfFwvUgqsfAz68pS4XAAAAANjc3eoLeE8P94+vI1/v+eXppt+vnbmX1/21+gKAtxMwhAkYwgQMYckP8qMHGqPdyoBkBvfyHCcwhAkYwgQMYQKGsK0/oF8u+w85jtp9GDKDezmeExjCBAxhAoYwAUPYh9UXMNv3L/8c+rlPX/995yvhLPfSCQxpAoYwAUOYgCFsm42Sy2X8ps7RIcdRo4chO230jOZezuEEhjABQ5iAIUzAEHYzm1ijhxxHf8ctb/ms4l4e5wSGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIUzAECZgCBMwhAkYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoYwAUOYgCHsbvUF/NfD/ePr6muAt3h+eVrSkhMYwgQMYQKGMAFDmIAhTMAQJmAIEzCECRjClm1i2bri1s3YznICQ5iAIUzAECZgCJsyxNppYPX9x9fVl8Bkn/7+svoSfhs92HICQ5iAIUzAECZgCPuw+gJGMZzi/xz929hp2HWUExjCBAxhAoYwAUPY8E2sGVtXBlbMMmOwdWY7ywkMYQKGMAFDmIAhbPtNLAMrVrr297fTxpYTGMIEDGEChjABQ9ipTazRW1cGVlSNHmwd3c5yAkOYgCFMwBAmYAgTMIQJGMIEDGEChjABQ9iyxwltXXFLVj126ASGMAFDmIAhTMAQJmAIEzCECRjCBAxhAoaw7b/YfYbRGzO2zI7z3p/jBIYwAUOYgCFMwBAmYAgTMIQJGMIEDGEChjCbWFXffr7/7/j88f1/B6c4gSFMwBAmYAgTMIQJGMIEDGEChjABQ5iAIcwm1uXP+x6lnXjvz3ECQ5iAIUzAECZgCGsOsWY8SnfUqkfuPOrn7+DiBIY0AUOYgCFMwBC2bIh17b/S2coZ/9/6ZnDf1t03JzCECRjCBAxhAoYwAUOYgCFMwBAmYAgTMITdjX7Bh/vH15GvZ8uH3Yzeunp+eXpzh05gCBMwhAkYwgQMYdt/J5bHDllp98c7ncAQJmAIEzCECRjChm9iXTN6O+sagy3OmjGwOrN1dY0TGMIEDGEChjABQ9j2m1hHHR1AGHb9eXbfpjrDCQxhAoYwAUOYgCFsyibWNTO2s2Cl0VtX1ziBIUzAECZgCBMwhC0bYh1l2MVuZgynjnICQ5iAIUzAECZgCNvmw/hZhl2ctdNw6ignMIQJGMIEDGECBgAAAAAAAAAAAAAAAAAAAAAAAODNfgEV0ZxgzC908gAAAABJRU5ErkJggg==" alt="กระต่ายพิกเซลน่ารัก"></div>
+    <h1 class="title"><span class="a">วงเหล้า</span><span class="b">สุด</span><span class="c">ป่วน</span></h1>
+    <div class="subtitle">OHANA · PIXEL CARD PARTY</div>
+  </header>
+  <section class="board-wrap" aria-label="ภารกิจเกม">
+    <div class="board">
+      <div class="board-tag"><span>♥</span> ไพ่ที่จั่วได้ <span>♥</span></div>
+      <span class="corner lt" aria-hidden="true">🍻</span><span class="corner rt" aria-hidden="true">💖</span><span class="corner lb" aria-hidden="true">✨</span><span class="corner rb" aria-hidden="true">⭐</span>
+      <div id="taskEmoji" class="task-emoji">🃏</div>
+      <div id="task" class="task" aria-live="polite">คืนนี้จั่วได้อะไร? 😜</div>
+      <div id="taskDetail" class="task-detail" aria-live="polite">ไพ่ 52 ใบ · กติกา 13 แบบ</div>
+      <div id="taskFoot" class="task-foot">พร้อมแล้วกดจั่วได้เลย!</div>
+      <span class="tiny-hearts" aria-hidden="true">♥ ✦ ♥</span>
+    </div>
+  </section>
+  <button id="spin" class="spin" type="button" aria-label="จั่วไพ่ใหม่"><span class="spin-face" aria-hidden="true">😜</span><span class="spin-text"><strong id="spinLabel">จั่วไพ่!</strong><small>แตะเพื่อเปิดการ์ด 🃏</small></span></button>
+  <p id="jsNotice" style="margin:10px 6px;color:#ffe16d;font-size:12px;line-height:1.6;text-align:center">⚠️ หน้าพรีวิวนี้อาจไม่รองรับการเล่นเกม กรุณาเปิดไฟล์ HTML ในเบราว์เซอร์ที่รองรับ JavaScript</p>
+<section class="setting" aria-label="ตัวเลือกการสุ่ม">
+    <span class="setting-left">🔀 จั่วไม่ซ้ำจนหมดสำรับ</span><button id="unique" class="switch" type="button" role="switch" aria-checked="true" aria-label="จั่วไม่ซ้ำจนหมดสำรับ 52 ใบ"></button>
+  </section>
+  <div class="progress" id="progress">ยังไม่ได้จั่ว · มีไพ่ 52 ใบ</div>
+  <div class="controls">
+    <button class="mini-card purple" id="openRules" type="button"><span class="ico">📖</span> กติกา 13 ใบ</button>
+    <button class="mini-card cyan" id="reset" type="button"><span class="ico">🔄</span> เริ่มใหม่</button>
+  </div>
+  <section class="k-panel" aria-label="ตั้งกติกาไพ่ K">
+    <label for="kRuleInput">👑 ตั้งกฎ K ก่อนเริ่มเกม</label>
+    <input id="kRuleInput" type="text" maxlength="180" placeholder="เมื่อใครจั่ว K ต้องทำอะไร?" autocomplete="off">
+    <small>เมื่อมีคนจั่ว K แล้ว ตั้งกฎใหม่สำหรับ K ใบถัดไปได้ที่นี่</small>
+  </section>
+  <section class="global-rule" aria-label="ข้อห้ามตลอดเกม"><strong>☝️ กฎที่ต้องจำตลอดเกม</strong><p>ห้ามชี้นิ้ว ต้องกุม/หุบมือตลอด หากเผลอตบมือหรือชี้นิ้ว = โดน!</p></section>
+  <section class="history" aria-label="ประวัติการสุ่ม"><h2>✨ ออกล่าสุด <span id="round">· รอบที่ 0</span></h2><div class="history-content" id="history"><span class="history-empty">ไพ่ที่จั่วแล้วจะปรากฏที่นี่</span></div></section>
+  <footer class="foot">🃏 เล่นวนกันไป • ปรับบทลงโทษเป็นสิ่งที่ทุกคนสบายใจได้<br><strong>ข้ามได้เสมอ ไม่บังคับดื่ม</strong> · กลับบ้านอย่างปลอดภัย 💖</footer>
+</main>
+<div id="modal" class="modal" role="presentation">
+  <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+    <div class="dialog-head"><div class="dialog-title" id="dialogTitle">📖 กติกา OHANA ทั้ง 13 ใบ</div><button id="closeRules" class="close" aria-label="ปิดรายการกติกา">✕</button></div>
+    <input class="search" id="search" type="search" placeholder="🔍 ค้นหากติกา..." aria-label="ค้นหากติกา">
+    <p class="hint">แต่ละหน้าไพ่มี 4 ดอก รวม 52 ใบ · เลขเดิมจั่วซ้ำได้คนละดอก</p>
+    <div id="ruleList" class="rule-list"></div>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+'use strict';
+// Four suits of each rank = one real 52-card deck. The interface is reused from Pixel Party.
+const RANK_RULES = [
+  {rank:'A', title:'โดนคนเดียว', detail:'คนที่จั่ว A โดนคนเดียว', emoji:'🍺', group:'ไพ่ทั่วไป'},
+  {rank:'2', title:'หาเพื่อนโดนด้วย 1 คน', detail:'เลือกเพื่อนอีก 1 คนมาโดนด้วย', emoji:'👯', group:'ไพ่ทั่วไป'},
+  {rank:'3', title:'หาเพื่อนโดนด้วย 2 คน', detail:'เลือกเพื่อนอีก 2 คนมาโดนด้วย', emoji:'🎯', group:'ไพ่ทั่วไป'},
+  {rank:'4', title:'เพื่อนฝั่งซ้ายโดน', detail:'คนที่นั่งฝั่งซ้ายของคนจั่วโดน', emoji:'👈', group:'ไพ่ทั่วไป'},
+  {rank:'5', title:'ห้าเฮฮา!', detail:'โดนทุกคน', emoji:'🥂', group:'ไพ่ทั่วไป'},
+  {rank:'6', title:'เพื่อนฝั่งขวาโดน', detail:'คนที่นั่งฝั่งขวาของคนจั่วโดน', emoji:'👉', group:'ไพ่ทั่วไป'},
+  {rank:'7', title:'ดวลลากเสียง!', detail:'หาคู่ประลอง ใครลากเสียงได้ยาวที่สุดชนะ คนแพ้ต้องผูกผ้าพันคอ ถ้ามีคนจั่ว 7 ใบต่อมาแล้วแพ้อีก ให้เป็นบัดดี้กับคนที่แพ้ 7 ก่อนหน้า', emoji:'🎤', group:'ไพ่พิเศษ'},
+  {rank:'8', title:'Relax!', detail:'ทุกคนพักผ่อนตามอัธยาศัย', emoji:'😌', group:'ไพ่พิเศษ'},
+  {rank:'9', title:'มินิเกม!', detail:'เปิดการ์ดมินิเกมที่กลุ่มเตรียมไว้ ใครเล่นแพ้โดน', emoji:'🎮', group:'ไพ่พิเศษ'},
+  {rank:'10', title:'เลอะ!', detail:'ต้องใช้แป้งโปะหน้า', emoji:'🤍', group:'ไพ่พิเศษ'},
+  {rank:'J', title:'จับหน้า!', detail:'เมื่อคนเป็นแจ๊คจับหน้า ทุกคนต้องจับตาม ใครจับหน้าคนสุดท้ายโดน', emoji:'🙈', group:'ไพ่ตัวละคร'},
+  {rank:'Q', title:'แหม่มเพื่อนไม่คบ', detail:'หากใครคุยกับแหม่ม หรือตอบคำถามที่แหม่มถาม = โดน', emoji:'👸', group:'ไพ่ตัวละคร'},
+  {rank:'K', title:'ทำตามกฎ K!', detail:'ก่อนเริ่มเกมต้องตกลงว่าใครจั่ว K ต้องทำอะไร เมื่อมีคนจั่ว K แล้ว ให้ตั้งกฎใหม่สำหรับ K ใบถัดไป', emoji:'👑', group:'ไพ่ตัวละคร'}
+];
+const SUITS=[{code:'S',symbol:'♠'},{code:'H',symbol:'♥'},{code:'D',symbol:'♦'},{code:'C',symbol:'♣'}];
+const RULES=RANK_RULES.flatMap(rule=>SUITS.map(suit=>({id:rule.rank+'-'+suit.code,rank:rule.rank,suit:suit.symbol,...rule})));
+const STORAGE_KEY='pixel-party-ohana-v1'; // Keep the old roulette save untouched.
+const el=id=>document.getElementById(id);
+const catGroups=['ไพ่ทั่วไป','ไพ่พิเศษ','ไพ่ตัวละคร'];
+const heads={'ไพ่ทั่วไป':'🃏 ไพ่ทั่วไป','ไพ่พิเศษ':'✨ ไพ่พิเศษ','ไพ่ตัวละคร':'👑 ไพ่ตัวละคร'};
+const DEFAULT={unique:true,used:[],history:[],round:0,current:null,kRule:'',lastKRule:''};
+let state={...DEFAULT};let rolling=false;let toastTimer=null;
+try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');if(saved&&typeof saved==='object'){
+  state.unique=typeof saved.unique==='boolean'?saved.unique:true;
+  state.used=Array.isArray(saved.used)?saved.used.filter(id=>RULES.some(r=>r.id===id)):[];
+  state.history=Array.isArray(saved.history)?saved.history.filter(id=>RULES.some(r=>r.id===id)).slice(0,8):[];
+  state.round=Number.isInteger(saved.round)&&saved.round>=0?saved.round:0;
+  state.current=RULES.some(r=>r.id===saved.current)?saved.current:null;
+  state.kRule=typeof saved.kRule==='string'?saved.kRule.slice(0,180):'';
+  state.lastKRule=typeof saved.lastKRule==='string'?saved.lastKRule.slice(0,180):'';
+}}catch(e){}
+const persist=()=>{try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}};
+const pick=n=>{if(globalThis.crypto&&crypto.getRandomValues){let arr=new Uint32Array(1);const limit=Math.floor(4294967296/n)*n;do{crypto.getRandomValues(arr)}while(arr[0]>=limit);return arr[0]%n;}return Math.floor(Math.random()*n)};
+function display(){
+  const curr=RULES.find(r=>r.id===state.current);
+  el('task').textContent=curr?curr.title:'คืนนี้จั่วได้อะไร? 😜';
+  const rank=el('taskEmoji');rank.textContent=curr?curr.rank+curr.suit:'🃏';
+  rank.classList.toggle('red-suit',!!curr&&['♥','♦'].includes(curr.suit));
+  if(curr?.rank==='K') el('taskDetail').textContent=state.lastKRule?'👑 กฎ K ใบนี้: '+state.lastKRule:'ยังไม่ได้ตั้งกฎ K — ตั้งกฎก่อนจั่วครั้งต่อไปได้ด้านล่าง';
+  else el('taskDetail').textContent=curr?curr.detail:'ไพ่ 52 ใบ · กติกา 13 แบบ';
+  el('taskFoot').textContent=curr?'ส่งมือถือให้คนต่อไป 💕':'พร้อมแล้วกดจั่วได้เลย!';
+  el('spinLabel').textContent=state.round?'จั่วอีกใบ!':'จั่วไพ่!';
+  el('unique').setAttribute('aria-checked',String(state.unique));
+  const remaining=RULES.length-state.used.length;
+  el('progress').textContent=state.unique?`จั่วแล้ว ${state.used.length}/${RULES.length} ใบ · เหลือ ${remaining} ใบในสำรับ`:`จั่วแบบมีโอกาสออกไพ่ซ้ำ · ทั้งหมด ${RULES.length} ใบ`;
+  el('round').textContent=`· รอบที่ ${state.round}`;
+  el('history').replaceChildren();
+  if(!state.history.length){const span=document.createElement('span');span.className='history-empty';span.textContent='ไพ่ที่จั่วแล้วจะปรากฏที่นี่';el('history').append(span)}
+  else state.history.forEach(id=>{const r=RULES.find(r=>r.id===id);if(!r)return;const b=document.createElement('span');b.className='chip';b.textContent=r.rank+r.suit;b.title=r.title;el('history').append(b)});
+}
+function sound(){try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;const ctx=new AC();[620,850,1090].forEach((hz,i)=>{let o=ctx.createOscillator(),g=ctx.createGain();o.type='square';o.frequency.value=hz;g.gain.setValueAtTime(.0001,ctx.currentTime+i*.07);g.gain.exponentialRampToValueAtTime(.055,ctx.currentTime+i*.07+.005);g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+i*.07+.08);o.connect(g).connect(ctx.destination);o.start(ctx.currentTime+i*.07);o.stop(ctx.currentTime+i*.07+.09)});setTimeout(()=>ctx.close().catch(()=>{}),450)}catch(e){}}
+function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;for(let i=0;i<25;i++){const a=document.createElement('span');a.className='float-confetti';a.style.setProperty('--dx',`${Math.round((Math.random()-.5)*450)}px`);a.style.setProperty('--dy',`${Math.round((Math.random()-.5)*400)}px`);a.style.setProperty('--c',['#ff65bc','#ffe16d','#74f1dc','#c28bfc'][i%4]);document.body.appendChild(a);setTimeout(()=>a.remove(),760)}}
+function spin(){if(rolling)return;rolling=true;const button=el('spin');button.disabled=true;el('task').classList.add('is-rolling');el('task').setAttribute('aria-live','off');sound();
+  const pool=state.unique?RULES.filter(r=>!state.used.includes(r.id)):RULES;
+  const selection=(pool.length?pool:RULES)[pick((pool.length?pool:RULES).length)];
+  let steps=0;const ticker=setInterval(()=>{const rnd=RULES[pick(RULES.length)];el('task').textContent=rnd.title;el('taskEmoji').textContent=rnd.rank+rnd.suit;el('taskDetail').textContent='🃏 กำลังสับไพ่...';steps++;if(steps>=15){clearInterval(ticker);state.current=selection.id;state.round++;state.history=[selection.id,...state.history].slice(0,8);if(state.unique)state.used=pool.length?[...state.used,selection.id]:[selection.id];if(selection.rank==='K')state.lastKRule=state.kRule.trim();rolling=false;button.disabled=false;el('task').classList.remove('is-rolling');el('task').setAttribute('aria-live','polite');persist();display();confetti();if(selection.rank==='K'&&!state.lastKRule)toast('👑 ยังไม่ได้ตั้งกฎ K!');else if(selection.rank==='K')toast('👑 ตั้งกฎ K สำหรับครั้งถัดไปได้เลย');else if(state.unique&&state.used.length===RULES.length)toast('🎉 หมดสำรับ 52 ใบแล้ว! จั่วอีกครั้งจะสับสำรับใหม่');}},100); // 15 × 100ms = 1.5s
+}
+function toast(str){const t=el('toast');t.textContent=str;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2600)}
+function reset(){if(rolling)return;state={...DEFAULT,unique:state.unique,used:[],history:[],round:0,current:null,kRule:'',lastKRule:''};el('kRuleInput').value='';persist();display();toast('🔄 สับสำรับใหม่แล้ว!')}
+function makeRules(query=''){
+  const q=query.trim().toLocaleLowerCase('th');const list=el('ruleList');list.replaceChildren();let found=0;
+  for(const group of catGroups){const items=RANK_RULES.filter(r=>r.group===group&&(r.title.toLocaleLowerCase('th').includes(q)||r.detail.toLocaleLowerCase('th').includes(q)||r.rank.toLocaleLowerCase('th').includes(q)));if(!items.length)continue;found+=items.length;const header=document.createElement('div');header.className='group-label';header.textContent=heads[group]+` (${items.length})`;list.append(header);for(const r of items){const row=document.createElement('div');row.className='rule-row';const num=document.createElement('span');num.className='rule-id';num.textContent=r.rank;const desc=document.createElement('span');desc.textContent=r.title+' — '+r.detail;row.append(num,desc);list.append(row)}}
+  if(!q){const row=document.createElement('div');row.className='rule-row';const num=document.createElement('span');num.className='rule-id';num.textContent='☝';const desc=document.createElement('span');desc.textContent='ข้อห้ามตลอดเกม: ห้ามชี้นิ้ว ต้องกุม/หุบมือไว้เสมอ เผลอตบมือหรือชี้นิ้ว = โดน';row.append(num,desc);list.append(row)}
+  if(!found){const empty=document.createElement('p');empty.className='hint';empty.textContent='ไม่พบกติกาที่ค้นหา';list.append(empty)}
+}
+const modal=el('modal');let beforeModal=null;
+function openRules(){beforeModal=document.activeElement;el('search').value='';makeRules();modal.classList.add('open');document.body.style.overflow='hidden';el('closeRules').focus()}
+function closeRules(){modal.classList.remove('open');document.body.style.overflow='';beforeModal?.focus()}
+el('spin').addEventListener('click',spin);
+el('unique').addEventListener('click',()=>{if(rolling)return;state.unique=!state.unique;state.used=[];persist();display()});
+el('reset').addEventListener('click',reset);
+el('kRuleInput').value=state.kRule;
+el('kRuleInput').addEventListener('input',e=>{state.kRule=e.target.value.slice(0,180);persist()});
+el('openRules').addEventListener('click',openRules);
+el('closeRules').addEventListener('click',closeRules);
+el('search').addEventListener('input',e=>makeRules(e.target.value));
+modal.addEventListener('click',e=>{if(e.target===modal)closeRules()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeRules();if(e.key==='Tab'&&modal.classList.contains('open')){const focusable=[el('closeRules'),el('search')];if(e.shiftKey&&document.activeElement===focusable[0]){e.preventDefault();focusable[1].focus()}else if(!e.shiftKey&&document.activeElement===focusable[1]){e.preventDefault();focusable[0].focus()}}});
+// Self-contained HTML deliberately does not register the previous game's service worker.
+const notice = document.getElementById('jsNotice');
+if (notice) notice.hidden = true;
+display();
+</script>
+</body>
+</html>
